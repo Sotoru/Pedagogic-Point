@@ -1,0 +1,33 @@
+{
+  "name": "pedagogic-point",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "tokens": "design.md export docs/design.md --format css-tailwind > app/theme.css",
+    "predev": "npm run tokens",
+    "dev": "next dev",
+    "prebuild": "npm run tokens",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@google/design.md": "^0.3.0",
+    "firebase-admin": "^14.1.0",
+    "next": "16.2.10",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "sanitize-html": "^2.17.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.2",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/sanitize-html": "^2.16.1",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.10",
+    "tailwindcss": "^4.3.2",
+    "typescript": "^5"
+  }
+}
