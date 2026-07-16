@@ -1,6 +1,6 @@
 {
   "name": "pedagogic-point",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "scripts": {
     "tokens": "design.md export docs/design.md --format dtcg | node scripts/dtcg-to-panda.mjs docs/design.md > theme/tokens.gen.ts",
@@ -11,6 +11,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "check:slug": "node --experimental-strip-types scripts/check-slug.mts",
     "release:patch": "bash scripts/release.sh patch",
     "release:minor": "bash scripts/release.sh minor",
     "release:major": "bash scripts/release.sh major"
