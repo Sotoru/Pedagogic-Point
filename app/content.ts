@@ -26,7 +26,17 @@ export type Perla = { contenuto: string };
 // ponytail: a title containing a literal "-" won't round-trip (deslug turns it
 // into a space) — same limitation as the old repo, accepted for URL parity.
 export const toSlug = (titolo: string): string => titolo.split(" ").join("-");
-export const fromSlug = (slug: string): string => slug.split("-").join(" ");
+// Next 16 hands route params in canonical percent-ENCODED form (see its
+// canonicalizeURLPart). Decode before deslugging or non-ASCII titles (accents,
+// …) never match the Firestore titolo lookup. Do NOT remove the decode.
+export const fromSlug = (slug: string): string => {
+  try {
+    slug = decodeURIComponent(slug);
+  } catch {
+    /* malformed %-sequence: fall back to the raw param */
+  }
+  return slug.split("-").join(" ");
+};
 
 // Categoria -> design.md accent token. Multiple categorie may share a token.
 export const categoryAccent: Record<string, string> = {

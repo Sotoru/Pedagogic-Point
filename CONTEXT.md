@@ -10,6 +10,13 @@ by category.
 A single piece of pedagogical content. Has a title, excerpt, category, cover
 image, and reading time. Appears in the hero (one featured) or the article grid.
 
+**Slug**:
+The URL form of an Article's title — the title with spaces rendered as dashes
+(`Acting out` → `/articoli/Acting-out`), reversed on lookup to recover the exact
+title, which is itself the Firestore lookup key. There is no separate stored
+slug identifier.
+_Avoid_: id, permalink, path.
+
 **Category**:
 An open-ended, author-assigned label grouping articles by pedagogical domain
 (e.g. `apprendimento`, `curiosità`, `crescita personale`, `community`,
