@@ -1,11 +1,12 @@
 "use client";
 
 import { SunIcon, MoonIcon } from "./icons";
+import { css } from "@/styled-system/css";
 
 // Two-state theme toggle. Initial state comes from the pre-paint script in
 // layout.tsx (reads localStorage, else the OS preference) which sets `.dark`/
 // `.light` on <html>. Clicking pins an explicit choice. Icon swap is CSS-driven
-// (dark: variant), so no React state and no hydration mismatch.
+// (_dark condition), so no React state and no hydration mismatch.
 export function ThemeToggle() {
   const toggle = () => {
     const root = document.documentElement;
@@ -24,10 +25,18 @@ export function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label="Cambia tema chiaro/scuro"
-      className="cursor-pointer rounded-full p-2 text-on-surface-variant transition-colors hover:text-primary"
+      className={css({
+        cursor: "pointer",
+        borderRadius: "full",
+        padding: "2",
+        color: "on-surface-variant",
+        transitionProperty: "color",
+        transitionDuration: "150ms",
+        _hover: { color: "primary" },
+      })}
     >
-      <SunIcon className="dark:hidden" />
-      <MoonIcon className="hidden dark:block" />
+      <SunIcon className={css({ display: { base: "block", _dark: "none" } })} />
+      <MoonIcon className={css({ display: { base: "none", _dark: "block" } })} />
     </button>
   );
 }

@@ -1,1 +1,1 @@
-export default { plugins: { '@tailwindcss/postcss': {} } };
+export default { plugins: { '@pandacss/dev/postcss': {} } };

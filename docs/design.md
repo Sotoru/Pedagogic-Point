@@ -29,6 +29,31 @@ colors:
   on-primary: '{colors.on-dark}'
   on-secondary: '{colors.on-dark}'
   on-error: '{colors.on-dark}'
+  # --- Dark scheme (prefix `dark-`) ---
+  # Paired with the token of the same name minus the prefix; the build consumes
+  # these to emit Panda semantic tokens { base, _dark } and never exposes a
+  # `dark-*` color for direct use. Same hues as light, value structure inverted,
+  # accents lightened for contrast on dark, elevation by lightness.
+  dark-surface: '#1a1c20'
+  dark-surface-container: '#212429'
+  dark-border-subtle: '#313539'
+  dark-outline: '#9aa0a6'
+  dark-on-surface: '#e6e7e9'
+  dark-primary: '#e6e7e9'
+  dark-secondary: '#5aa2ff'
+  dark-error: '#ff5449'
+  dark-pedagogy: '#3ed66a'
+  dark-theory: '#a684e8'
+  dark-practice: '#ff9e47'
+  dark-rights: '#ff6b6b'
+  # Dark role aliases follow their canonical (references, add no new colors)…
+  dark-background: '{colors.dark-surface}'
+  dark-surface-container-low: '{colors.dark-surface-container}'
+  dark-on-surface-variant: '{colors.dark-outline}'
+  dark-outline-variant: '{colors.dark-border-subtle}'
+  dark-muted: '{colors.dark-outline}'
+  # …except on-primary: primary flips to light in dark, so its ink flips dark.
+  dark-on-primary: '#121316'
 typography:
   display-lg:
     fontFamily: Montserrat
@@ -155,11 +180,11 @@ To maintain a clean, professional aesthetic, this design system avoids heavy sha
 
 ## Shapes
 
-The shape language is "Soft-Professional." By utilizing a consistent 0.5rem (8px) radius, the UI feels modern and approachable without appearing overly playful or juvenile.
+The shape language is "Soft-Professional." A 0.5rem (8px) base radius on standard surfaces (inputs, thumbnails, cards) keeps the UI modern and approachable without appearing overly playful or juvenile; pill/button controls go full-capsule and large feature surfaces step up to 16–32px.
 
-- **Standard Elements:** Buttons, input fields, and article thumbnails all share the base 8px radius.
+- **Standard Elements:** Input fields and article thumbnails share the base 8px radius.
+- **Buttons & Pills:** Buttons and category tags use `rounded-full` for a full-capsule shape, matching the Filter Pill.
 - **Large Containers:** Educational modules or "Hero" cards may use the `rounded-lg` (16px) variant to create a distinct visual frame for high-priority content.
-- **Tags:** Article category tags should use the `rounded-xl` (24px) setting to create a "pill" effect, distinguishing them from interactive buttons.
 - **Media & Feature Cards:** Hero imagery and the Perla Pedagogica card use `rounded-xl` at 32px (an extended step beyond the standard `rounded.xl` token) — reserved for large, full-bleed-adjacent surfaces only.
 
 ## Components

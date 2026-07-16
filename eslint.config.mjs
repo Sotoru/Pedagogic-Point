@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Generated (gitignored) — never lint codegen output.
+    "styled-system/**",
+    "theme/tokens.gen.ts",
   ]),
 ]);
 

@@ -8,7 +8,11 @@ export async function refreshPerla(): Promise<Perla | null> {
   return getRandomPerla();
 }
 
-// Called by the "Carica altri" button — fetches the next page of grid articles.
-export async function loadMoreArticoli(cursor: string): Promise<ArticlePage> {
-  return getArticoli(cursor);
+// Called by the "Carica altri" button — fetches the next page of grid articles,
+// staying within the active category filter (if any).
+export async function loadMoreArticoli(
+  cursor: string,
+  categoria?: string | null,
+): Promise<ArticlePage> {
+  return getArticoli(cursor, categoria);
 }

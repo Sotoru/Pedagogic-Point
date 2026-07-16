@@ -37,6 +37,18 @@ export const categoryAccent: Record<string, string> = {
   "tutela diritti umani": "rights",
 };
 
+// The filter dropdown's options — same source of truth as the tag accents, so
+// the filter and the CategoryTag palette can't drift.
+export const CATEGORIE = Object.keys(categoryAccent);
+
+// Narrow a raw `?categoria=` search param to a known category, else null (= no
+// filter). Absent, array, or unknown values all degrade to "All" so junk URLs
+// render the full list instead of an empty grid or a 404.
+export function resolveCategoria(raw: string | string[] | undefined): string | null {
+  const v = Array.isArray(raw) ? raw[0] : raw;
+  return v && categoryAccent[v] ? v : null;
+}
+
 // Legacy reading-time formula (chars of introduzione + words of each answer, /120, floored).
 // ponytail: quirky by design (mixes chars and words) — kept identical to the old
 // project so displayed times match its content. A floor-divide needs no unit test.
