@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "tokens": "design.md export docs/design.md --format css-tailwind > app/theme.css",
-    "predev": "npm run tokens",
+    "tokens": "design.md export docs/design.md --format dtcg | node scripts/dtcg-to-panda.mjs docs/design.md > theme/tokens.gen.ts",
+    "prepare": "npm run tokens && panda codegen",
+    "predev": "npm run tokens && panda codegen",
     "dev": "next dev",
-    "prebuild": "npm run tokens",
+    "prebuild": "npm run tokens && panda codegen",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
@@ -20,14 +21,14 @@
     "sanitize-html": "^2.17.6"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.3.2",
+    "@pandacss/dev": "^1.11.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/sanitize-html": "^2.16.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
-    "tailwindcss": "^4.3.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "yaml": "^2.9.0"
   }
 }

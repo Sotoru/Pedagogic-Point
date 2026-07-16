@@ -40,5 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# design.md generated theme
-/app/theme.css
+# design.md → Panda generated tokens + Panda codegen output
+/theme/tokens.gen.ts
+/styled-system

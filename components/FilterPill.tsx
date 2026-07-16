@@ -1,15 +1,78 @@
+"use client";
+
+import type { ChangeEvent } from "react";
+import { useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { CATEGORIE } from "@/app/content";
 import { ChevronDown } from "./icons";
+import { css } from "@/styled-system/css";
+import { Flex } from "@/styled-system/jsx";
 
 // Filter Pill (design.md): rounded-full select-style control, trailing chevron.
-// Visual-only this step — wired to real filtering when the backend lands.
-export function FilterPill() {
+// A native <select> carries all the keyboard / mobile / a11y behaviour for free;
+// picking a category navigates to /?categoria=… (or / for "All"), which the
+// server page reads to filter the grid. defaultValue (+ the parent's key remount
+// on nav) avoids a controlled-value flicker during the pending navigation.
+export function FilterPill({ categoria }: { categoria: string | null }) {
+  const router = useRouter();
+  const [pending, startTransition] = useTransition();
+
+  const onChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const v = e.target.value;
+    // scroll: false keeps the viewport put so the dropdown stays in view;
+    // Next scrolls to top on nav by default. Nothing above the filter changes
+    // height on a category change, so preserving the offset is enough.
+    startTransition(() =>
+      router.push(v ? `/?categoria=${encodeURIComponent(v)}` : "/", {
+        scroll: false,
+      }),
+    );
+  };
+
   return (
-    <div className="flex items-center gap-3">
-      <span className="type-body-md text-muted">Filter by:</span>
-      <span className="type-button inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface-container-low px-4 py-2 text-on-surface">
-        All Categories
-        <ChevronDown className="text-muted" />
-      </span>
-    </div>
+    <Flex align="center" gap="3">
+      <span className={css({ textStyle: "body-md", color: "muted" })}>Filtra per:</span>
+      <div className={css({ position: "relative", display: "inline-flex", alignItems: "center" })}>
+        <select
+          defaultValue={categoria ?? ""}
+          onChange={onChange}
+          disabled={pending}
+          aria-label="Filtra articoli per categoria"
+          className={css({
+            textStyle: "button",
+            appearance: "none",
+            display: "inline-flex",
+            alignItems: "center",
+            borderRadius: "full",
+            border: "1px solid",
+            borderColor: "border-subtle",
+            backgroundColor: "surface-container-low",
+            color: "on-surface",
+            paddingBlock: "2",
+            paddingInline: "4",
+            paddingRight: "9", // room for the chevron overlay
+            cursor: "pointer",
+            _disabled: { opacity: 0.6, cursor: "wait" },
+          })}
+        >
+          <option value="">Tutte le categorie</option>
+          {CATEGORIE.map((c) => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
+        </select>
+        {/* Overlay chevron: a native <select> can't hold an SVG child, so it
+            sits absolutely on top and lets clicks fall through to the select. */}
+        <ChevronDown
+          className={css({
+            color: "muted",
+            position: "absolute",
+            right: "4",
+            pointerEvents: "none",
+          })}
+        />
+      </div>
+    </Flex>
   );
 }

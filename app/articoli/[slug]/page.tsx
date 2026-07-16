@@ -9,13 +9,21 @@ import { CategoryTag } from "@/components/CategoryTag";
 import { ReadingTime } from "@/components/ReadingTime";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
+import { css } from "@/styled-system/css";
 
 // On-demand ISR, same 5-min window as the home page. No generateStaticParams —
 // pages render on first request and are cached (mirrors the legacy fallback:"blocking").
 export const revalidate = 300;
 
 // Prose styling shared by the sanitized HTML blocks (intro + answers).
-const PROSE = "type-body-lg text-on-surface [&_a]:text-primary [&_a]:underline [&_p]:mt-4 [&_ul]:mt-4 [&_ul]:list-disc [&_ul]:pl-6 [&_li]:mt-1";
+const prose = {
+  textStyle: "body-lg",
+  color: "on-surface",
+  "& a": { color: "primary", textDecoration: "underline" },
+  "& p": { marginTop: "4" },
+  "& ul": { marginTop: "4", listStyleType: "disc", paddingLeft: "6" },
+  "& li": { marginTop: "1" },
+} as const;
 
 export async function generateMetadata({
   params,
@@ -50,47 +58,91 @@ export default async function ArticoloPage({
       <Nav />
       <main>
         {/* Full-width cover: Hero Media treatment (rounded-32, 1px border). */}
-        <div className="mx-auto max-w-content-max px-margin-mobile pt-8 md:px-margin-desktop md:pt-12">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[32px] border border-outline-variant md:aspect-[2/1]">
+        <div
+          className={css({
+            marginInline: "auto",
+            maxWidth: "content-max",
+            paddingInline: { base: "margin-mobile", md: "margin-desktop" },
+            paddingTop: { base: "8", md: "12" },
+          })}
+        >
+          <div
+            className={css({
+              position: "relative",
+              aspectRatio: { base: "4/3", md: "2/1" },
+              overflow: "hidden",
+              borderRadius: "32px",
+              border: "1px solid",
+              borderColor: "outline-variant",
+            })}
+          >
             <Image
               src={articolo.copertina}
               alt={articolo.titolo}
               fill
               priority
               sizes="(min-width: 768px) 1104px, 100vw"
-              className="object-cover"
+              className={css({ objectFit: "cover" })}
             />
           </div>
         </div>
 
         {/* Reading column (~720px for comfortable line length). */}
-        <article className="mx-auto max-w-[720px] px-margin-mobile py-12 md:py-16">
+        <article
+          className={css({
+            marginInline: "auto",
+            maxWidth: "720px",
+            paddingInline: "margin-mobile",
+            paddingBlock: { base: "12", md: "16" },
+          })}
+        >
           <Link
             href="/"
-            className="type-button mb-8 flex w-fit items-center gap-1.5 text-muted transition-colors hover:text-primary"
+            className={css({
+              textStyle: "button",
+              marginBottom: "8",
+              display: "flex",
+              width: "fit-content",
+              alignItems: "center",
+              gap: "1.5",
+              color: "muted",
+              transitionProperty: "color",
+              transitionDuration: "150ms",
+              _hover: { color: "primary" },
+            })}
           >
             <span aria-hidden>&larr;</span> Torna agli articoli
           </Link>
           <CategoryTag categoria={articolo.categoria} />
-          <h1 className="type-headline-md mt-4 text-primary">{articolo.titolo}</h1>
-          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-muted">
-            {articolo.autore && <span className="type-body-md">di {articolo.autore}</span>}
-            <ReadingTime minutes={letturaTime(articolo)} suffix="min read" />
+          <h1 className={css({ textStyle: "headline-md", marginTop: "4", color: "primary" })}>{articolo.titolo}</h1>
+          <div
+            className={css({
+              marginTop: "4",
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              columnGap: "4",
+              rowGap: "2",
+              color: "muted",
+            })}
+          >
+            {articolo.autore && <span className={css({ textStyle: "body-md" })}>di {articolo.autore}</span>}
+            <ReadingTime minutes={letturaTime(articolo)} suffix="min di lettura" />
           </div>
 
           {articolo.introduzione && (
             <div
-              className={`mt-8 ${PROSE}`}
+              className={css(prose, { marginTop: "8" })}
               dangerouslySetInnerHTML={{ __html: cleanHtml(articolo.introduzione) }}
             />
           )}
 
           {/* The `domande` array is the article body: a Q&A sequence. */}
           {articolo.domande.map((d, i) => (
-            <section key={i} className="mt-10">
-              <h2 className="type-headline-sm text-primary">{d.domanda}</h2>
+            <section key={i} className={css({ marginTop: "10" })}>
+              <h2 className={css({ textStyle: "headline-sm", color: "primary" })}>{d.domanda}</h2>
               <div
-                className={`mt-3 ${PROSE}`}
+                className={css(prose, { marginTop: "3" })}
                 dangerouslySetInnerHTML={{ __html: cleanHtml(d.risposta) }}
               />
             </section>

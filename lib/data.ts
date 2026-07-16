@@ -63,9 +63,12 @@ export async function getFeatured(): Promise<Article | null> {
 
 // One page of grid articles. `cursor` is the last article ID from the previous
 // page; omit it for the first page. nextCursor is null once the last page is hit.
-export async function getArticoli(cursor?: string): Promise<ArticlePage> {
+// `categoria` (when set) filters to one category — the equality + documentId
+// ordering is served by Firestore's automatic single-field index (no composite).
+export async function getArticoli(cursor?: string, categoria?: string | null): Promise<ArticlePage> {
   try {
     let q = getDb().collection(ARTICLES).orderBy(FieldPath.documentId()).limit(PAGE_SIZE);
+    if (categoria) q = q.where("categoria", "==", categoria);
     if (cursor) q = q.startAfter(cursor);
     const snap = await q.get();
     const articoli = snap.docs.map((doc) => toArticle(doc.id, doc.data()));

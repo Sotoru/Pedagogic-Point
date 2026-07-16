@@ -42,3 +42,26 @@ _Avoid_: Quote card, pearl.
 **Reading time**:
 An article's estimated read duration, shown as an icon + `label-caps` meta text
 (e.g. "5 min read", "3 min").
+
+## Styling (Panda, bound to design.md — see ADR 0004)
+
+**Generated token preset** (`theme/tokens.gen.ts`):
+The Panda tokens/semanticTokens/textStyles compiled from `docs/design.md` by
+`scripts/dtcg-to-panda.mjs`. Generated and git-ignored — never hand-edit it;
+change `docs/design.md` and re-run `npm run tokens`.
+_Avoid_: theme file (that was the Tailwind-era `app/theme.css`, now removed).
+
+**`dark-` convention**:
+Dark-scheme colours in `docs/design.md`, named `dark-<token>` (e.g.
+`dark-surface`). The transform pairs each with its base token into a semantic
+`{ base, _dark }`; a `dark-*` colour is never used directly. Applied under the
+class-based `.dark` condition.
+
+**textStyle**:
+A named typography style from design.md (`display-lg`, `body-lg`, `quote`, …),
+applied as `css({ textStyle: '…' })`. Replaces the old `.type-*` classes.
+
+**Recipe**:
+A centralized multi-variant component style in `panda.config.ts`. Two exist:
+`categoryTag` (variant per accent) and `button` (outline variant). One-off
+styling uses `css()`; layout uses the `flex`/`grid` patterns.

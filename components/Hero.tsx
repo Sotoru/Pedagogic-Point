@@ -4,36 +4,66 @@ import type { Article } from "@/app/content";
 import { letturaTime, toSlug } from "@/app/content";
 import { CategoryTag } from "./CategoryTag";
 import { ReadingTime } from "./ReadingTime";
+import { css } from "@/styled-system/css";
 
 // Hero: 5/7 text/media split (design.md). Stacks text-then-image below md.
 export function Hero({ articolo }: { articolo: Article }) {
   return (
-    <section className="mx-auto max-w-content-max px-margin-mobile py-12 md:px-margin-desktop md:py-16">
-      <div className="relative grid gap-gutter md:grid-cols-12 md:items-center">
-        <div className="text-center md:col-span-5 md:text-left">
-          <h1 className="type-hero-title text-primary">
+    <section
+      className={css({
+        marginInline: "auto",
+        maxWidth: "content-max",
+        paddingInline: { base: "margin-mobile", md: "margin-desktop" },
+        paddingBlock: { base: "12", md: "16" },
+      })}
+    >
+      <div
+        className={css({
+          position: "relative",
+          display: "grid",
+          gap: "gutter",
+          gridTemplateColumns: { md: "repeat(12, 1fr)" },
+          alignItems: { md: "center" },
+        })}
+      >
+        <div className={css({ textAlign: { base: "center", md: "left" }, gridColumn: { md: "span 5" } })}>
+          <h1 className={css({ textStyle: { base: "display-lg-mobile", md: "display-lg" }, color: "primary" })}>
             {/* Stretched link: whole hero is the target, title is the link text. */}
-            <Link href={`/articoli/${toSlug(articolo.titolo)}`} className="after:absolute after:inset-0">
+            <Link
+              href={`/articoli/${toSlug(articolo.titolo)}`}
+              className={css({ _after: { content: '""', position: "absolute", inset: "0" } })}
+            >
               {articolo.titolo}
             </Link>
           </h1>
-          <p className="type-body-lg mt-4 line-clamp-4 text-on-surface">{articolo.introduzione}</p>
-          <div className="mt-6">
+          <p className={css({ textStyle: "body-lg", marginTop: "4", lineClamp: "4", color: "on-surface" })}>
+            {articolo.introduzione}
+          </p>
+          <div className={css({ marginTop: "6" })}>
             <CategoryTag categoria={articolo.categoria} />
-            <div className="mt-3">
-              <ReadingTime minutes={letturaTime(articolo)} suffix="min read" />
+            <div className={css({ marginTop: "3" })}>
+              <ReadingTime minutes={letturaTime(articolo)} suffix="min di lettura" />
             </div>
           </div>
         </div>
-        <div className="md:col-span-7">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[32px] border border-outline-variant">
+        <div className={css({ gridColumn: { md: "span 7" } })}>
+          <div
+            className={css({
+              position: "relative",
+              aspectRatio: "4/3",
+              overflow: "hidden",
+              borderRadius: "32px",
+              border: "1px solid",
+              borderColor: "outline-variant",
+            })}
+          >
             <Image
               src={articolo.copertina}
               alt={articolo.titolo}
               fill
               priority
               sizes="(min-width: 768px) 58vw, 100vw"
-              className="object-cover"
+              className={css({ objectFit: "cover" })}
             />
           </div>
         </div>
