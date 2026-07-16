@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Release semver in un comando: bump su develop, poi UN solo commit "vX.Y.Z"
-# (snapshot dell'albero di develop) su main + tag, push atomico, GitHub Release.
+# Release semver in un comando: accorpa il bump nell'ultimo commit di develop
+# (force-with-lease), poi UN solo commit "vX.Y.Z" (snapshot dell'albero di
+# develop) su main + tag, push atomico, GitHub Release.
 # Uso: npm run release:patch|minor|major
 set -euo pipefail
 
@@ -24,16 +25,16 @@ if git rev-parse "$TAG" >/dev/null 2>&1 || git ls-remote --exit-code --tags orig
   echo "✗ il tag $TAG esiste già"; exit 1
 fi
 
-# --- bump committato su develop; main = UN commit con l'albero di develop ---
-git commit -aqm "$TAG"
+# --- bump accorpato nell'ultimo commit di develop; main = UN commit con l'albero di develop ---
+git commit -aq --amend --no-edit          # accorpa il bump nell'ultimo commit (riscrive develop)
 NEW=$(git commit-tree "$DEV^{tree}" -p "$(git rev-parse origin/$MAIN)" -m "$TAG")
 git branch -f "$MAIN" "$NEW"
 git tag -a "$TAG" -m "$TAG" "$NEW"
-# ponytail: nessun rollback automatico se il push fallisce (caso raro di rete);
-#           in tal caso: git tag -d $TAG && git branch -f main origin/main
+# ponytail: nessun rollback automatico se il push fallisce (caso raro di rete); in tal caso:
+#           git tag -d $TAG && git branch -f main origin/main && git reset --hard origin/develop
 
-# push atomico dei due branch + tag: o tutto o niente
-git push --atomic -q origin "$DEV" "$MAIN" "refs/tags/$TAG"
+# push atomico dei due branch + tag: o tutto o niente (develop riscritto -> force-with-lease)
+git push --atomic --force-with-lease=refs/heads/$DEV -q origin "$DEV" "$MAIN" "refs/tags/$TAG"
 
 # --- GitHub Release per ultima: se gh non è autenticato il resto è già consistente ---
 gh release create "$TAG" --generate-notes --title "$TAG" || {

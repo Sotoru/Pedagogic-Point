@@ -1,10 +1,12 @@
 # Release semver con un comando (`npm run release:*`)
 
 `npm run release:patch|minor|major` (→ `scripts/release.sh`) fa in un colpo:
-bump di `package.json`/`package-lock.json` su `develop`, poi **un solo commit
-`vX.Y.Z`** su `main` con l'albero di `develop`, tag annotato, push atomico e
-GitHub Release con note auto-generate. Il livello (patch/minor/major) lo sceglie
-chi rilascia; il deploy resta separato (parte dal push su `main`).
+bump di `package.json`/`package-lock.json` **accorpato (`git commit --amend`)
+nell'ultimo commit di `develop`** — niente commit `vX.Y.Z` a sé su `develop` —
+poi **un solo commit `vX.Y.Z`** su `main` con l'albero di `develop`, tag
+annotato, push atomico e GitHub Release con note auto-generate. Il livello
+(patch/minor/major) lo sceglie chi rilascia; il deploy resta separato (parte dal
+push su `main`).
 
 ## Considered Options
 
@@ -28,6 +30,12 @@ chi rilascia; il deploy resta separato (parte dal push su `main`).
 
 - **`main` diverge da `develop`** per costruzione: non condividono la storia
   granulare, solo la radice. È il prezzo voluto per un `main` = log dei rilasci.
+- **`develop` riscritto a ogni release.** Il bump è accorpato nell'ultimo commit
+  con `--amend`, quindi quel commit (già su `origin`) viene riscritto: il push usa
+  `--force-with-lease=refs/heads/develop` (`main` resta fast-forward, il tag è
+  nuovo, nessuno dei due è forzato). Il prezzo di un log di `develop` fatto solo di
+  commit "di lavoro", senza il rumore dei commit `vX.Y.Z`; sicuro su repo
+  solo-autore, da rivedere se `develop` diventasse condiviso.
 - **Fonte della versione = `package.json` di `develop`.** `develop` viene
   bumpato per primo e resta la base del prossimo numero; `main` riceve quello
   stesso valore nello snapshot.
