@@ -6,6 +6,24 @@ by category.
 
 ## Language
 
+**Audience**:
+Who PedagogicPoint is written for: appassionati di pedagogia and generally
+curious readers — enthusiasts of the subject, not a classroom.
+_Avoid_: students, pupils, learners (the site does not address anyone as a student).
+
+**Voice**:
+The editorial register of every UI string and piece of copy: Italian, warm,
+elegant, gently playful, pedagogical — witty but refined. Addresses the Audience
+as a curious peer.
+_Avoid_: meme-y, sarcastic, juvenile phrasing.
+
+**Pagina non trovata**:
+The not-found state, framed as a friendly detour rather than an error, in two
+flavors: a generic one (a light, curious one-liner + a way back home) for unknown
+URLs, and an article-specific one that, when a requested Article doesn't exist,
+points the reader at the featured Article instead.
+_Avoid_: error page, 404 error (reserve "error" for genuine failures).
+
 **Article**:
 A single piece of pedagogical content. Has a title, excerpt, category, cover
 image, and reading time. Appears in the hero (one featured) or the article grid.

@@ -12,3 +12,9 @@ Before writing Panda CSS, fetch the official docs (don't rely on training data):
 
 Context7 MCP also indexes Panda CSS — prefer it for scoped lookups.
 <!-- END:nextjs-agent-rules -->
+
+# TODO list
+
+Whenever you resolve an issue or fix a bug, check off the matching item in `docs/todo-list.md` (`- [ ]` → `- [x]`). Add it there first if it's missing.
+
+Also add a new item to `docs/todo-list.md` whenever an interesting idea comes up in conversation, or when the user says to add it.
