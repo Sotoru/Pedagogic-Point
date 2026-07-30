@@ -3,7 +3,7 @@
 ## Front end
 
 - [x] Add 404 page
-- [ ] Improve color system
+- [ ] Improve color system (less color e light/dark **same color palette** but **inverted**)
 - [ ] Improve card item with border on hover
 - [ ] Add “fake admin” page, with a private route _/admin_ and hardcoded password
   - [ ] Under _/admin_ create a page to view/edit all the article
@@ -12,8 +12,8 @@
 
 - [ ] Migrate to **Neon Db** + **Drizzle**
   - [ ] Add **slug** field for url search params for article
-  - [ ] Migrate all article body content(article.domande) from **html** to **md**
-  - [ ] Update article.domande into unique field
+  - [x] Migrate all article body content(article.domande) from **html** to **md**
+  - [x] Update article.domande into unique field
 
 ## Shared
 
