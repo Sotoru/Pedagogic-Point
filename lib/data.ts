@@ -9,6 +9,19 @@ export const PAGE_SIZE = 6;
 
 export type ArticlePage = { articoli: Article[]; nextCursor: string | null };
 
+// Admin: every article, ordered by title. Used by the /admin list. No paging —
+// the collection is small (~74). Throws are NOT swallowed here so the admin
+// sees real errors rather than a silently empty list.
+export async function getAllArticoli(): Promise<Article[]> {
+  return getDb().select().from(articles).orderBy(asc(articles.titolo));
+}
+
+// Admin: one article by its UUID PK, for the edit form. Null if not found.
+export async function getArticoloById(id: string): Promise<Article | null> {
+  const rows = await getDb().select().from(articles).where(eq(articles.id, id)).limit(1);
+  return rows[0] ?? null;
+}
+
 // Look up one article by its unique slug (the URL segment, taken verbatim).
 // Returns null if none matches.
 export async function getArticoloBySlug(slug: string): Promise<Article | null> {

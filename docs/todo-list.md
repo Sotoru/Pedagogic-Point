@@ -5,8 +5,8 @@
 - [x] Add 404 page
 - [ ] Improve color system (less color e light/dark **same color palette** but **inverted**)
 - [ ] Improve card item with border on hover
-- [ ] Add “fake admin” page, with a private route _/admin_ and hardcoded password
-  - [ ] Under _/admin_ create a page to view/edit all the article
+- [x] Add "fake admin" page, with a private route _/admin_ and hardcoded password (env, see ADR 0010)
+  - [x] Under _/admin_ create a page to view/edit all the article (full CRUD + Markdown editor + Unsplash cover picker)
 
 ## Back end
 
