@@ -1,6 +1,6 @@
 {
   "name": "pedagogic-point",
-  "version": "0.2.4",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "tokens": "design.md export docs/design.md --format dtcg | node scripts/dtcg-to-panda.mjs docs/design.md > theme/tokens.gen.ts",
@@ -11,8 +11,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "migrate:article-body": "node --experimental-strip-types scripts/migrate-article-body.mts",
-    "cleanup:article-fields": "node --experimental-strip-types scripts/remove-unused-article-fields.mts",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
     "check:slug": "node --experimental-strip-types scripts/check-slug.mts",
     "release:patch": "bash scripts/release.sh patch",
     "release:minor": "bash scripts/release.sh minor",
@@ -20,13 +20,13 @@
   },
   "dependencies": {
     "@google/design.md": "^0.3.0",
-    "firebase-admin": "^14.1.0",
+    "@neondatabase/serverless": "^1.1.0",
+    "drizzle-orm": "^0.45.2",
     "markdown-to-jsx": "^9.9.0",
     "next": "16.2.10",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "sanitize-html": "^2.17.6",
-    "turndown": "^7.2.4"
+    "sanitize-html": "^2.17.6"
   },
   "devDependencies": {
     "@pandacss/dev": "^1.11.4",
@@ -34,7 +34,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/sanitize-html": "^2.16.1",
-    "@types/turndown": "^5.0.6",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
     "typescript": "^5",

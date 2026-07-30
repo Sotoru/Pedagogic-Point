@@ -3,7 +3,8 @@
 // body, which replaces the old `domande` Q&A structure.
 
 export type Article = {
-  id: string;
+  id: string; // uuid, DB-generated
+  slug: string; // URL-safe, normalized from titolo (see slugify); unique
   titolo: string;
   introduzione: string; // "" => card excerpt falls back to a generic teaser
   copertina: string; // Unsplash photo URL
@@ -15,23 +16,18 @@ export type Article = {
 
 export type Perla = { contenuto: string };
 
-// URL <-> title mapping, mirrored from the legacy repo: the article slug is just
-// the title with spaces as dashes, and lookup reverses it. Kept in one place so
-// the link and the Firestore query can't drift.
-// ponytail: a title containing a literal "-" won't round-trip (deslug turns it
-// into a space) — same limitation as the old repo, accepted for URL parity.
-export const toSlug = (titolo: string): string => titolo.split(" ").join("-");
-// Next 16 hands route params in canonical percent-ENCODED form (see its
-// canonicalizeURLPart). Decode before deslugging or non-ASCII titles (accents,
-// …) never match the Firestore titolo lookup. Do NOT remove the decode.
-export const fromSlug = (slug: string): string => {
-  try {
-    slug = decodeURIComponent(slug);
-  } catch {
-    /* malformed %-sequence: fall back to the raw param */
-  }
-  return slug.split("-").join(" ");
-};
+// Normalized URL slug from a title: lowercase, accents stripped, any run of
+// non-alphanumerics collapsed to a single dash, trimmed. Deterministic and
+// pure — the single source of truth used both at seed time (stored in the
+// `slug` column) and never reversed, so the old `-` round-trip fragility is
+// gone. Example: "La pedagogia nera" -> "la-pedagogia-nera".
+export const slugify = (titolo: string): string =>
+  titolo
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // strip diacritics (accents)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-") // non-alphanumerics -> dash
+    .replace(/^-+|-+$/g, ""); // trim leading/trailing dashes
 
 // Categoria -> design.md accent token. Multiple categorie may share a token.
 export const categoryAccent: Record<string, string> = {

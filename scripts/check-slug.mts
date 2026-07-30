@@ -1,18 +1,20 @@
-// Regression guard for the URL <-> title round-trip (run: npm run check:slug).
-// The bug this protects against: Next 16 delivers route params percent-encoded,
-// so a title with non-ASCII chars (accents, …) 404'd until fromSlug decoded it.
+// Regression guard for slug generation (run: npm run check:slug).
+// Slugs are now stored in the DB and used verbatim in URLs — never reversed —
+// so slugify must always emit URL-safe ASCII: lowercase, no accents, single
+// dashes, no leading/trailing dashes.
 import assert from "node:assert";
-import { toSlug, fromSlug } from "../app/content.ts";
+import { slugify } from "../app/content.ts";
 
-// The exact case that used to 404: an accented title, param arriving encoded.
-const accented = "Cercando la felicità";
-assert.equal(fromSlug(encodeURIComponent(toSlug(accented))), accented);
+// Accented title -> accents stripped, spaces to dashes, lowercased.
+assert.equal(slugify("Cercando la felicità"), "cercando-la-felicita");
 
-// The ellipsis case from the original report.
-const ellipsis = "Facciamo finta che…";
-assert.equal(fromSlug(encodeURIComponent(toSlug(ellipsis))), ellipsis);
+// Ellipsis and other non-alphanumerics collapse to a single dash and trim.
+assert.equal(slugify("Facciamo finta che…"), "facciamo-finta-che");
 
-// Pure-ASCII titles must still round-trip (they always worked).
-assert.equal(fromSlug(toSlug("Acting out")), "Acting out");
+// Pure-ASCII title.
+assert.equal(slugify("Acting out"), "acting-out");
 
-console.log("slug round-trip ok");
+// Literal dashes no longer break anything — runs collapse, edges trim.
+assert.equal(slugify("La pedagogia - nera"), "la-pedagogia-nera");
+
+console.log("slugify ok");

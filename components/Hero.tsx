@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Article } from "@/app/content";
-import { letturaTime, toSlug } from "@/app/content";
+import { letturaTime } from "@/app/content";
 import { CategoryTag } from "./CategoryTag";
 import { ReadingTime } from "./ReadingTime";
 import { css } from "@/styled-system/css";
@@ -30,7 +30,7 @@ export function Hero({ articolo }: { articolo: Article }) {
           <h1 className={css({ textStyle: { base: "display-lg-mobile", md: "display-lg" }, color: "primary" })}>
             {/* Stretched link: whole hero is the target, title is the link text. */}
             <Link
-              href={`/articoli/${toSlug(articolo.titolo)}`}
+              href={`/articoli/${articolo.slug}`}
               className={css({ _after: { content: '""', position: "absolute", inset: "0" } })}
             >
               {articolo.titolo}
