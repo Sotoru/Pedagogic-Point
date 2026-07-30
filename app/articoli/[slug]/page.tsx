@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getArticoloByTitolo } from "@/lib/data";
-import { fromSlug, letturaTime, excerpt } from "@/app/content";
+import { getArticoloBySlug } from "@/lib/data";
+import { letturaTime, excerpt } from "@/app/content";
 import { cleanHtml } from "@/lib/html";
 import { CategoryTag } from "@/components/CategoryTag";
 import { ReadingTime } from "@/components/ReadingTime";
@@ -21,7 +21,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const articolo = await getArticoloByTitolo(fromSlug((await params).slug));
+  const articolo = await getArticoloBySlug((await params).slug);
   if (!articolo) return {};
   const description = excerpt(articolo);
   return {
@@ -41,7 +41,7 @@ export default async function ArticoloPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const articolo = await getArticoloByTitolo(fromSlug((await params).slug));
+  const articolo = await getArticoloBySlug((await params).slug);
   if (!articolo) notFound();
 
   return (

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Article } from "@/app/content";
-import { excerpt, letturaTime, toSlug } from "@/app/content";
+import { excerpt, letturaTime } from "@/app/content";
 import { CategoryTag } from "./CategoryTag";
 import { ReadingTime } from "./ReadingTime";
 import { css } from "@/styled-system/css";
@@ -27,7 +27,7 @@ export function ArticleCard({ articolo }: { articolo: Article }) {
         <h3 className={s.title}>
           {/* Stretched link: whole card is the target, title is the link text. */}
           <Link
-            href={`/articoli/${toSlug(articolo.titolo)}`}
+            href={`/articoli/${articolo.slug}`}
             className={css({ _after: { content: '""', position: "absolute", inset: "0" } })}
           >
             {articolo.titolo}
