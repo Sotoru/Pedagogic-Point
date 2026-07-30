@@ -26,7 +26,22 @@ _Avoid_: error page, 404 error (reserve "error" for genuine failures).
 
 **Article**:
 A single piece of pedagogical content. Has a title, excerpt, category, cover
-image, and reading time. Appears in the hero (one featured) or the article grid.
+image, body, and reading time. Appears in the hero (one featured) or the
+article grid.
+
+**Article body**:
+The complete long-form main content of an Article. It is a single continuous
+editorial body, separate from the Article's introduction. It is not a sequence
+of question-and-answer blocks. The application expects the Article body to exist
+as the canonical content field after migration. It is authored as Markdown
+without inline HTML; legacy Q&A content is not part of the model.
+_Avoid_: domande, Q&A body.
+
+**Introduction**:
+The short lead-in text for an Article, used for previews, metadata, and the
+opening paragraph on the article page. It remains separate from the Article
+body.
+_Avoid_: body, excerpt.
 
 **Slug**:
 The URL form of an Article's title — the title with spaces rendered as dashes

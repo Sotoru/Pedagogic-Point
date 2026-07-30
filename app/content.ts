@@ -1,11 +1,6 @@
-// Domain types + pure helpers for home-page content.
-//
-// ponytail: field names mirror the legacy Firestore schema
-// (github.com/Sotoru/PedadgogicPoint-ssr, collections `articoliDinamici` /
-// `pillole`) so the data layer reads docs with zero transform. Rename to clean
-// English once the migration is proven. Live data comes from `lib/data.ts`.
-
-export type Domanda = { domanda: string; risposta: string };
+// Domain types + pure helpers for home-page content. Live data comes from
+// `lib/data.ts`; field names still mirror Firestore except the canonical article
+// body, which replaces the old `domande` Q&A structure.
 
 export type Article = {
   id: string;
@@ -15,7 +10,7 @@ export type Article = {
   categoria: string;
   evidenza: boolean; // featured => renders in the hero
   autore: string;
-  domande: Domanda[]; // article body Q&A; also feeds the reading-time formula
+  body: string; // Markdown article body, separate from introduzione
 };
 
 export type Perla = { contenuto: string };
@@ -59,12 +54,10 @@ export function resolveCategoria(raw: string | string[] | undefined): string | n
   return v && categoryAccent[v] ? v : null;
 }
 
-// Legacy reading-time formula (chars of introduzione + words of each answer, /120, floored).
-// ponytail: quirky by design (mixes chars and words) — kept identical to the old
-// project so displayed times match its content. A floor-divide needs no unit test.
+// Reading-time estimate: intro characters + Markdown body words, /120, floored.
 export function letturaTime(a: Article): number {
   let count = a.introduzione ? a.introduzione.length : 0;
-  for (const d of a.domande) count += d.risposta.split(" ").length;
+  count += a.body.trim() ? a.body.trim().split(/\s+/).length : 0;
   return Math.floor(count / 120);
 }
 

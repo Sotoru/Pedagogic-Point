@@ -7,6 +7,7 @@ import { fromSlug, letturaTime, excerpt } from "@/app/content";
 import { cleanHtml } from "@/lib/html";
 import { CategoryTag } from "@/components/CategoryTag";
 import { ReadingTime } from "@/components/ReadingTime";
+import { MarkdownBody } from "@/components/MarkdownBody";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { css } from "@/styled-system/css";
@@ -14,16 +15,6 @@ import { css } from "@/styled-system/css";
 // On-demand ISR, same 5-min window as the home page. No generateStaticParams —
 // pages render on first request and are cached (mirrors the legacy fallback:"blocking").
 export const revalidate = 300;
-
-// Prose styling shared by the sanitized HTML blocks (intro + answers).
-const prose = {
-  textStyle: "body-lg",
-  color: "on-surface",
-  "& a": { color: "primary", textDecoration: "underline" },
-  "& p": { marginTop: "4" },
-  "& ul": { marginTop: "4", listStyleType: "disc", paddingLeft: "6" },
-  "& li": { marginTop: "1" },
-} as const;
 
 export async function generateMetadata({
   params,
@@ -132,21 +123,18 @@ export default async function ArticoloPage({
 
           {articolo.introduzione && (
             <div
-              className={css(prose, { marginTop: "8" })}
+              className={css({
+                textStyle: "body-lg",
+                marginTop: "8",
+                color: "on-surface",
+                "& a": { color: "primary", textDecoration: "underline" },
+                "& p": { marginTop: "4" },
+              })}
               dangerouslySetInnerHTML={{ __html: cleanHtml(articolo.introduzione) }}
             />
           )}
 
-          {/* The `domande` array is the article body: a Q&A sequence. */}
-          {articolo.domande.map((d, i) => (
-            <section key={i} className={css({ marginTop: "10" })}>
-              <h2 className={css({ textStyle: "headline-sm", color: "primary" })}>{d.domanda}</h2>
-              <div
-                className={css(prose, { marginTop: "3" })}
-                dangerouslySetInnerHTML={{ __html: cleanHtml(d.risposta) }}
-              />
-            </section>
-          ))}
+          {articolo.body && <MarkdownBody>{articolo.body}</MarkdownBody>}
         </article>
       </main>
       <Footer />

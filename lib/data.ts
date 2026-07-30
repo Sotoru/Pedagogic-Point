@@ -21,7 +21,7 @@ function toArticle(id: string, d: DocumentData): Article {
     categoria: d.categoria ?? "",
     evidenza: d.evidenza ?? false,
     autore: d.autore ?? "",
-    domande: Array.isArray(d.domande) ? d.domande : [],
+    body: d.body ?? "",
   };
 }
 
