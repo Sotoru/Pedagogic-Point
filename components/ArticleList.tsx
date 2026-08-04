@@ -26,15 +26,22 @@ export function ArticleList({
   const [articoli, setArticoli] = useState(initialArticoli);
   const [cursor, setCursor] = useState(initialCursor);
   const [pending, startTransition] = useTransition();
+  // Starts empty so mounting the live region announces nothing; it only speaks
+  // once a click has actually appended cards.
+  const [annuncio, setAnnuncio] = useState("");
   const s = articleGrid();
 
-  const onLoadMore = () =>
+  const onLoadMore = () => {
+    // aria-disabled keeps the button focusable, so unlike `disabled` it can still
+    // be clicked while pending — the guard is what makes the request idempotent.
+    if (pending || !cursor) return;
     startTransition(async () => {
-      if (!cursor) return;
       const page = await loadMoreArticoli(cursor, categoria);
       setArticoli((prev) => [...prev, ...page.articoli]);
       setCursor(page.nextCursor);
+      setAnnuncio(`${page.articoli.length} articoli caricati.`);
     });
+  };
 
   const visibili = articoli.filter((a) => a.id !== featuredId);
 
@@ -55,9 +62,17 @@ export function ArticleList({
           <ArticleCard key={a.id} articolo={a} />
         ))}
       </div>
+      {/* Appending cards changes the page silently otherwise: nothing tells a
+          screen reader the click did anything (WCAG 4.1.3). */}
+      <span role="status" className={css({ srOnly: true })}>
+        {annuncio}
+      </span>
       {cursor && (
         <div className={s.footer}>
-          <Button type="button" onClick={onLoadMore} disabled={pending}>
+          {/* aria-disabled, not disabled: a disabled button drops out of the tab
+              order mid-interaction, so the focus you were holding lands on <body>
+              and you lose your place in the list. */}
+          <Button type="button" onClick={onLoadMore} aria-disabled={pending}>
             {pending ? "Caricamento…" : "Carica altri"}
           </Button>
         </div>

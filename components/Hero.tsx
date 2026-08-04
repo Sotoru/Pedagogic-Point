@@ -24,6 +24,15 @@ export function Hero({ articolo }: { articolo: Article }) {
           gap: "gutter",
           gridTemplateColumns: { md: "repeat(12, 1fr)" },
           alignItems: { md: "center" },
+          // Same reasoning as the card (see articleCard): ring the whole target,
+          // not just the title line the stretched link happens to occupy.
+          "&:has(a:focus-visible)": {
+            outline: "2px solid",
+            outlineColor: "primary",
+            outlineOffset: "8px",
+            borderRadius: "8px",
+            "& a:focus-visible": { outline: "none" },
+          },
         })}
       >
         <div className={css({ textAlign: { base: "center", md: "left" }, gridColumn: { md: "span 5" } })}>

@@ -35,12 +35,21 @@ export function LoginForm() {
       <input
         type="password"
         name="password"
+        // A placeholder is not a label: it vanishes as soon as you type and is
+        // not reliably announced. The field has no visible caption by design, so
+        // the name is carried by aria-label.
+        aria-label="Password"
         placeholder="Password"
+        // This page exists only to type this password; sending focus there is the
+        // whole point. The blanket rule can't tell it from a hijacked page load.
+        // eslint-disable-next-line jsx-a11y/no-autofocus
         autoFocus
         required
         className={field}
       />
-      {error && <p className={css({ color: "error", textStyle: "body-sm" })}>{error}</p>}
+      {/* role="alert": a wrong password otherwise fails in silence for anyone not
+          watching this corner of the screen. */}
+      {error && <p role="alert" className={css({ color: "error", textStyle: "body-sm" })}>{error}</p>}
       <button type="submit" disabled={pending} className={button}>
         {pending ? "Accesso…" : "Entra"}
       </button>

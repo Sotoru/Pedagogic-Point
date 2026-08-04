@@ -25,11 +25,15 @@ export function PerlaPedagogica({ initialPerla }: { initialPerla: Perla | null }
 
   if (!perla) return null;
 
-  const onRefresh = () =>
+  const onRefresh = () => {
+    // See ArticleList: aria-disabled keeps focus, so the guard replaces what
+    // `disabled` used to prevent.
+    if (pending) return;
     startTransition(async () => {
       const next = await refreshPerla();
       if (next) setPerla(next);
     });
+  };
 
   return (
     <section className={css({ backgroundColor: "surface-container", paddingBlock: { base: "16", md: "20" } })}>
@@ -55,7 +59,7 @@ export function PerlaPedagogica({ initialPerla }: { initialPerla: Perla | null }
           <button
             type="button"
             onClick={onRefresh}
-            disabled={pending}
+            aria-disabled={pending}
             aria-label="Mostra un'altra perla"
             className={css({
               position: "absolute",
@@ -83,7 +87,10 @@ export function PerlaPedagogica({ initialPerla }: { initialPerla: Perla | null }
             &rdquo;
           </div>
           <span className={categoryTag({ categoria: "theory" })}>Perla Pedagogica</span>
-          <p className={css({ textStyle: "quote", marginTop: "4", color: "primary" })}>
+          {/* role="status" (= polite + atomic) so the refresh button reads out the
+              new perla instead of swapping it in silently. The region ships with
+              its content already in place, so mounting announces nothing. */}
+          <p role="status" className={css({ textStyle: "quote", marginTop: "4", color: "primary" })}>
             &ldquo;{perla.contenuto}&rdquo;
           </p>
         </div>

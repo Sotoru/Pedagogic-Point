@@ -1,6 +1,6 @@
 {
   "name": "pedagogic-point",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "tokens": "design.md export docs/design.md --format dtcg | node scripts/dtcg-to-panda.mjs docs/design.md > theme/tokens.gen.ts",
@@ -16,29 +16,34 @@
     "check:slug": "node --experimental-strip-types scripts/check-slug.mts",
     "release:patch": "bash scripts/release.sh patch",
     "release:minor": "bash scripts/release.sh minor",
-    "release:major": "bash scripts/release.sh major"
+    "release:major": "bash scripts/release.sh major",
+    "check:contrast": "node --experimental-strip-types scripts/check-contrast.mts",
+    "check:a11y": "node --env-file=.env.local scripts/check-a11y.mjs"
   },
   "dependencies": {
-    "@google/design.md": "^0.3.0",
-    "@mdxeditor/editor": "^4.1.1",
+    "@google/design.md": "^0.4.0",
+    "@mdxeditor/editor": "^4.2.0",
     "@neondatabase/serverless": "^1.1.0",
     "drizzle-orm": "^0.45.2",
-    "jose": "^6.2.5",
-    "markdown-to-jsx": "^9.9.0",
-    "next": "16.2.10",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
+    "jose": "^6.2.8",
+    "markdown-to-jsx": "^9.10.2",
+    "next": "16.3.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "sanitize-html": "^2.17.6"
   },
   "devDependencies": {
-    "@pandacss/dev": "^1.11.4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@axe-core/playwright": "^4.12.1",
+    "@pandacss/dev": "^1.12.0",
+    "@types/node": "^22.20.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
     "@types/sanitize-html": "^2.16.1",
     "drizzle-kit": "^0.31.10",
     "eslint": "^9",
-    "eslint-config-next": "16.2.10",
+    "eslint-config-next": "16.3.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "playwright": "^1.62.1",
     "typescript": "^5",
     "yaml": "^2.9.0"
   }

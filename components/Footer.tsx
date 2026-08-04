@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Wordmark } from "./Wordmark";
 import { css } from "@/styled-system/css";
 import { Flex } from "@/styled-system/jsx";
@@ -30,9 +31,11 @@ export function Footer() {
             color: "muted",
           })}
         >
-          <a href="#">Informativa sulla privacy</a>
-          <a href="#">Termini di servizio</a>
-          <a href="#">Feed RSS</a>
+          <Link href="/privacy">Informativa sulla privacy</Link>
+          <Link href="/termini">Termini di servizio</Link>
+          {/* Route handler, not a page: a plain anchor, so the browser fetches
+              the XML instead of attempting a client-side navigation. */}
+          <a href="/rss.xml">Feed RSS</a>
         </nav>
         <p className={meta}>© 2024 PedagogicPoint. Tutti i diritti riservati.</p>
       </Flex>

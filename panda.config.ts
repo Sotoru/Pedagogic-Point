@@ -34,6 +34,11 @@ export default defineConfig({
   // Base surface + text, bound to design.md tokens (was app/globals.css body).
   globalCss: {
     "html, body": { overflowX: "hidden" },
+    // Keyboard focus in the design system's own ink instead of each browser's
+    // default ring — the admin forms already did this inline. primary sits at
+    // 12.58–17.52 against every surface in both schemes, well past the 3:1 WCAG
+    // asks of a focus indicator (verified by npm run check:contrast).
+    "*:focus-visible": { outline: "2px solid", outlineColor: "primary", outlineOffset: "2px" },
     body: {
       backgroundColor: "background",
       color: "on-surface",
