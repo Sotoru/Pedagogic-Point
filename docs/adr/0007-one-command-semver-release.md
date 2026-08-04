@@ -3,10 +3,10 @@
 `npm run release:patch|minor|major` (→ `scripts/release.sh`) fa in un colpo:
 bump di `package.json`/`package-lock.json` **accorpato (`git commit --amend`)
 nell'ultimo commit di `develop`** — niente commit `vX.Y.Z` a sé su `develop` —
-poi **un solo commit `vX.Y.Z`** su `main` con l'albero di `develop`, tag
-annotato, push atomico e GitHub Release con note auto-generate. Il livello
-(patch/minor/major) lo sceglie chi rilascia; il deploy resta separato (parte dal
-push su `main`).
+poi **un commit di merge `vX.Y.Z`** su `main` con l'albero di `develop` e due
+parent (`main`, `develop`), tag annotato, push atomico e GitHub Release con note
+auto-generate. Il livello (patch/minor/major) lo sceglie chi rilascia; il deploy
+resta separato (parte dal push su `main`).
 
 ## Considered Options
 
@@ -17,19 +17,27 @@ push su `main`).
   dipendenza per ciò che poche righe di script coprono.
 - **Bump automatico dai commit.** Scartato: vogliamo scegliere il livello a
   mano al comando, non derivarlo dalla history.
-- **Forma della storia su `main`.** Scelto **squash via `git commit-tree`**:
-  `main` contiene *solo* i commit di rilascio (uno per versione), non i commit
-  granulari di `develop`. Scartato `git merge --no-ff` (i commit di `develop`
-  sarebbero raggiungibili da `main`, "uno per release" solo con
-  `--first-parent`). Si usa `commit-tree` invece di `git merge --squash` per
-  evitare i conflitti-fantasma dei merge-base obsoleti nei rilasci ripetuti.
+- **Forma della storia su `main`.** ~~Scelto squash: `main` contiene *solo* i
+  commit di rilascio.~~ **Rivisto:** lo squash rendeva i commit di `develop` non
+  raggiungibili da `main`, cioè la storia granulare di ciò che ogni versione
+  contiene si perdeva nel ramo che si rilascia e si deploya. Il commit di rilascio
+  ora ha **due parent** — `main` primo, `develop` secondo — quindi si ottengono
+  entrambe le proprietà: `git log --first-parent main` resta il log dei soli
+  rilasci (uno per versione, la ragione per cui lo squash era stato scelto) e
+  `git log main` raggiunge tutta la storia di `develop`. Si continua a usare
+  `commit-tree` e non `git merge --no-ff`: l'albero resta per costruzione quello di
+  `develop`, non si fa checkout di `main`, e si evitano i conflitti-fantasma dei
+  merge-base obsoleti nei rilasci ripetuti.
 - **Changelog.** Nessun `CHANGELOG.md` versionato: il changelog sono le note
   auto-generate della GitHub Release (`--generate-notes`).
 
 ## Consequences
 
-- **`main` diverge da `develop`** per costruzione: non condividono la storia
-  granulare, solo la radice. È il prezzo voluto per un `main` = log dei rilasci.
+- **`main` include la storia di `develop`** (secondo parent), e la vista "un
+  commit per rilascio" si ottiene con `git log --first-parent main`. I rilasci
+  fatti prima di questa revisione restano squashati: le loro lineage sono disgiunte
+  da `develop`, quindi un `git log main` senza `--first-parent` mostra le due
+  storie affiancate fino al punto in cui il merge è entrato in uso.
 - **`develop` riscritto a ogni release.** Il bump è accorpato nell'ultimo commit
   con `--amend`, quindi quel commit (già su `origin`) viene riscritto: il push usa
   `--force-with-lease=refs/heads/develop` (`main` resta fast-forward, il tag è
