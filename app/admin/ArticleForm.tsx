@@ -85,7 +85,7 @@ export function ArticleForm({
       </div>
 
       <div className={group}>
-        <label className={label}>Copertina</label>
+        <label className={label} htmlFor="copertina-url">Copertina</label>
         {copertina && (
           <div
             className={css({
@@ -103,6 +103,7 @@ export function ArticleForm({
         )}
         <div className={css({ display: "flex", gap: "2" })}>
           <input
+            id="copertina-url"
             value={copertina}
             onChange={(e) => setCopertina(e.target.value)}
             placeholder="URL immagine"
@@ -113,8 +114,14 @@ export function ArticleForm({
       </div>
 
       <div className={group}>
-        <label className={label}>Contenuto (Markdown)</label>
+        {/* Not a <label>: the control is MDXEditor's contenteditable, which owns
+            its own markup and exposes no id to point htmlFor at. Naming the
+            wrapping group instead says the same thing without claiming an
+            association that doesn't exist. */}
+        <span className={label} id="contenuto-label">Contenuto (Markdown)</span>
         <div
+          role="group"
+          aria-labelledby="contenuto-label"
           className={css({
             borderRadius: "12px",
             border: "1px solid",
