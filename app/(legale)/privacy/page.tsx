@@ -7,9 +7,9 @@ import { css } from "@/styled-system/css";
 // with no new styling.
 //
 // The text describes only what the code actually does (no analytics, no tracking
-// cookies, one localStorage preference, Unsplash images, Vercel logs). Fill in
-// [TITOLARE] and [EMAIL] before publishing — and note this is a factual draft,
-// not legal advice.
+// cookies, one localStorage preference, Unsplash images, Vercel logs), so it needs
+// revisiting whenever that changes. It is a factual statement of the site's
+// behaviour, not legal advice.
 export const metadata: Metadata = {
   title: "Informativa sulla privacy",
   description: "Quali dati raccoglie PedagogicPoint e come vengono trattati.",
@@ -22,7 +22,7 @@ accade quando visiti il sito.
 
 ## Titolare del trattamento
 
-[TITOLARE] — per qualsiasi richiesta relativa ai tuoi dati: [EMAIL].
+Paolo Laddomada — per qualsiasi richiesta relativa ai tuoi dati: [paolo.laddomada26@gmail.com](mailto:paolo.laddomada26@gmail.com).
 
 ## Cosa resta nel tuo browser
 
@@ -65,7 +65,7 @@ La preferenza del tema resta nel tuo browser finché non la cancelli tu.
 
 Puoi chiedere in qualsiasi momento l'accesso, la rettifica, la cancellazione o la
 limitazione dei dati che ti riguardano, e opporti al loro trattamento, scrivendo a
-[EMAIL]. Hai inoltre diritto di reclamo al Garante per la protezione dei dati
+[paolo.laddomada26@gmail.com](mailto:paolo.laddomada26@gmail.com). Hai inoltre diritto di reclamo al Garante per la protezione dei dati
 personali.
 
 ## Modifiche

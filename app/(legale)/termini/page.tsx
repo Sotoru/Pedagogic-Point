@@ -3,7 +3,7 @@ import { MarkdownBody } from "@/components/MarkdownBody";
 import { css } from "@/styled-system/css";
 
 // Footer destination, same shape as /privacy (shell in the route group layout).
-// Fill in [TITOLARE] and [EMAIL] before publishing; factual draft, not legal advice.
+// Ordinary terms for a personal editorial site, not legal advice.
 export const metadata: Metadata = {
   title: "Termini di servizio",
   description: "Condizioni d'uso dei contenuti di PedagogicPoint.",
@@ -15,7 +15,7 @@ pedagogico. Usandolo accetti le condizioni descritte qui.
 
 ## Contenuti del sito
 
-Gli articoli e le perle pedagogiche sono opera di [TITOLARE] e sono tutelati dal
+Gli articoli e le perle pedagogiche sono opera di Paolo Laddomada e sono tutelati dal
 diritto d'autore. Puoi leggerli, stamparli e condividerli per uso personale, e
 citarne brani indicando la fonte con un collegamento alla pagina originale. Non è
 consentita la ripubblicazione integrale, né l'uso commerciale, senza autorizzazione
@@ -34,12 +34,12 @@ professionista qualificato nel merito di una situazione specifica.
 ## Nessuna garanzia
 
 Il sito è messo a disposizione così com'è. Pur curando i contenuti con attenzione,
-[TITOLARE] non garantisce che siano completi, aggiornati o privi di errori, né che
+Paolo Laddomada non garantisce che siano completi, aggiornati o privi di errori, né che
 il servizio sia sempre raggiungibile e senza interruzioni.
 
 ## Collegamenti esterni
 
-Alcune pagine rimandano a siti di terze parti. Su quei contenuti [TITOLARE] non ha
+Alcune pagine rimandano a siti di terze parti. Su quei contenuti Paolo Laddomada non ha
 alcun controllo e non risponde di ciò che vi si trova.
 
 ## Modifiche
@@ -49,7 +49,7 @@ pubblicata su questa pagina.
 
 ## Contatti e legge applicabile
 
-Per qualsiasi comunicazione: [EMAIL]. Si applica la legge italiana.
+Per qualsiasi comunicazione: [paolo.laddomada26@gmail.com](mailto:paolo.laddomada26@gmail.com). Si applica la legge italiana.
 `;
 
 export default function TerminiPage() {
