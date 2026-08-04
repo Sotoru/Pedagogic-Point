@@ -17,6 +17,17 @@ export const articleCard = defineSlotRecipe({
       transitionProperty: "border-color",
       transitionDuration: "150ms",
       _hover: { borderColor: "primary" },
+      // The stretched link's own ring would outline just the title text, leaving
+      // a keyboard user unsure what they are about to activate. Ring the card
+      // instead. Nesting the link's outline:none inside the :has() means a
+      // browser without :has() support drops the whole block and keeps the
+      // global ring, rather than ending up with no visible focus at all.
+      "&:has(a:focus-visible)": {
+        outline: "2px solid",
+        outlineColor: "primary",
+        outlineOffset: "2px",
+        "& a:focus-visible": { outline: "none" },
+      },
     },
     media: { position: "relative", aspectRatio: "16/10" },
     image: { objectFit: "cover" },

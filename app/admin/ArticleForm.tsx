@@ -139,11 +139,17 @@ export function ArticleForm({
         <span className={css({ textStyle: "body-md", color: "on-surface" })}>In evidenza (Hero)</span>
       </label>
 
+      {/* The outcome of a save was only ever visible, never announced: alert for a
+          failure that needs attention, status for the quieter confirmation. */}
       {result && !result.ok && (
-        <p className={css({ color: "error", textStyle: "body-sm", marginBottom: "4" })}>{result.error}</p>
+        <p role="alert" className={css({ color: "error", textStyle: "body-sm", marginBottom: "4" })}>
+          {result.error}
+        </p>
       )}
       {result && result.ok && (
-        <p className={css({ color: "primary", textStyle: "body-sm", marginBottom: "4" })}>Salvato.</p>
+        <p role="status" className={css({ color: "primary", textStyle: "body-sm", marginBottom: "4" })}>
+          Salvato.
+        </p>
       )}
 
       <button

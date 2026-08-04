@@ -47,7 +47,9 @@ export function LoginForm() {
         required
         className={field}
       />
-      {error && <p className={css({ color: "error", textStyle: "body-sm" })}>{error}</p>}
+      {/* role="alert": a wrong password otherwise fails in silence for anyone not
+          watching this corner of the screen. */}
+      {error && <p role="alert" className={css({ color: "error", textStyle: "body-sm" })}>{error}</p>}
       <button type="submit" disabled={pending} className={button}>
         {pending ? "Accesso…" : "Entra"}
       </button>
