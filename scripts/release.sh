@@ -24,7 +24,12 @@ npm run build
 npm run check:contrast
 
 # --- nuova versione (da package.json) e tag libero ---
-TAG=$(npm version "$LEVEL" --no-git-tag-version | tail -1)   # vX.Y.Z; aggiorna package.json + lock, no commit/tag
+npm version "$LEVEL" --no-git-tag-version >/dev/null   # aggiorna package.json + lock, no commit/tag
+# Il tag si legge dal file appena scritto, non dall'output di npm: la fonte della
+# versione è package.json, e così non dipende da cosa npm decide di stampare.
+# La `v` è il prefisso dei tag di rilascio (npm la aggiunge di suo nell'output);
+# tiene i tag separati dal `1.0` legacy senza prefisso. Vedi ADR 0007.
+TAG="v$(node -p "require('./package.json').version")"
 if git rev-parse "$TAG" >/dev/null 2>&1 || git ls-remote --exit-code --tags origin "$TAG" >/dev/null 2>&1; then
   git checkout -- package.json package-lock.json
   echo "✗ il tag $TAG esiste già"; exit 1
