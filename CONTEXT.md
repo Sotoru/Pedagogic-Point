@@ -105,3 +105,12 @@ applied as `css({ textStyle: '…' })`. Replaces the old `.type-*` classes.
 A centralized multi-variant component style in `panda.config.ts`. Two exist:
 `categoryTag` (variant per accent) and `button` (outline variant). One-off
 styling uses `css()`; layout uses the `flex`/`grid` patterns.
+
+**Foundations**:
+The views that show the design system itself rather than any product screen: the
+complete type scale and the complete colour system, one entry per token design.md
+declares, in both schemes. The colour view separates the canonical colours from
+the role aliases pointing at them — a distinction design.md declares and no other
+view renders. Always derived from the declared tokens, never transcribed, so it
+cannot come to disagree with design.md.
+_Avoid_: style guide, showcase, palette page.

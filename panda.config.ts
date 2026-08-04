@@ -50,6 +50,16 @@ export default defineConfig({
   // categoria is chosen at runtime → emit every accent variant.
   staticCss: {
     recipes: { categoryTag: ["*"] },
+    // Every textStyle, because two consumers pick the name at runtime and Panda
+    // can only extract literals. `Wordmark` takes `variant` as a prop, so
+    // `brand-wordmark-sm` (passed from Footer) was never emitted at all and the
+    // footer wordmark rendered at the inherited size instead of 32px; the
+    // Foundations sheet iterates every name by definition. Guarded by
+    // npm run check:tokens, which fails if a declared textStyle has no class.
+    css: [{ properties: { textStyle: ["*"] } }],
   },
+  // panda.config imports these, so editing design.md or a recipe should rebuild
+  // the CSS without restarting the dev server / Storybook.
+  dependencies: ["theme/**/*.ts"],
   outdir: "styled-system",
 });

@@ -41,6 +41,19 @@ for (const name of keys(color)) {
   semColors[name] = { value: darkKey ? { base, _dark: darkKey.$value.hex } : { base } };
 }
 
+// --- which colors design.md declares as references rather than values ---
+// The DTCG export resolves references away, so `semanticTokens` cannot tell a
+// canonical colour from a role name pointing at one. That distinction is the
+// shape of the palette — 13 unique colours behind 7 role aliases — and the
+// Foundations sheet exists to show it, so it has to survive the transform.
+// Read from the frontmatter for the same reason as shadows: DTCG drops it.
+const colorAliases = {};
+for (const [name, value] of Object.entries(front.colors ?? {})) {
+  if (name.startsWith("dark-")) continue;
+  const ref = typeof value === "string" && value.match(/^\{colors\.([^}]+)\}$/);
+  if (ref) colorAliases[name] = ref[1];
+}
+
 // --- spacing/sizes (emit into both so maxW + padding/gap both resolve) ---
 const spacing = {};
 for (const k of keys(dtcg.spacing)) spacing[k] = { value: dim(dtcg.spacing[k].$value) };
@@ -77,5 +90,6 @@ process.stdout.write(
   banner +
     `export const tokens = ${j({ spacing, sizes: spacing, radii, shadows })};\n\n` +
     `export const semanticTokens = ${j({ colors: semColors })};\n\n` +
+    `export const colorAliases = ${j(colorAliases)};\n\n` +
     `export const textStyles = ${j(textStyles)};\n`,
 );

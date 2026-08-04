@@ -22,6 +22,13 @@ npm run build
 # chromium e il DB raggiungibili, e farebbe fallire il rilascio per un motivo
 # ambientale invece che per un difetto (si lancia a mano). Vedi ADR 0011.
 npm run check:contrast
+# Stesso ragionamento per i textStyle: un nome dichiarato in design.md che non
+# produce nessuna classe non è una violazione di niente, è un'assenza, e nessun
+# linter né axe la vede (il wordmark del footer ha reso alla dimensione sbagliata
+# per tutta la vita del componente). Istantaneo, senza browser né DB, quindi sta
+# nel cancello — al contrario di check:stories, che pretende chromium e la rete
+# verso Google Fonts. Vedi ADR 0012.
+npm run check:tokens
 
 # --- nuova versione (da package.json) e tag libero ---
 npm version "$LEVEL" --no-git-tag-version >/dev/null   # aggiorna package.json + lock, no commit/tag

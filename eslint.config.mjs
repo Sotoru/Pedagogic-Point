@@ -23,6 +23,9 @@ const eslintConfig = defineConfig([
     // Generated (gitignored) — never lint codegen output.
     "styled-system/**",
     "theme/tokens.gen.ts",
+    // Storybook's build output: minified bundles, ~10k warnings and 391 errors
+    // of pure noise that would break the release gate.
+    "storybook-static/**",
   ]),
 ]);
 
