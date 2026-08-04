@@ -20,7 +20,10 @@ export const button = defineRecipe({
         color: "primary",
         paddingInline: "6",
         paddingBlock: "2.5",
-        _hover: { backgroundColor: "primary", color: "on-dark" },
+        // on-primary, not on-dark: primary flips to near-white in dark mode, so a
+        // fixed light ink left the label at 1.19:1 against its own hover fill —
+        // invisible. on-primary is the token that flips with it (15.01:1).
+        _hover: { backgroundColor: "primary", color: "on-primary" },
       },
     },
   },

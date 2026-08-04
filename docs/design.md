@@ -6,7 +6,7 @@ colors:
   surface: '#f9f9fb'            # page background & lifted secondary surface
   surface-container: '#edeef0'  # single raised/tinted tier (cards, pills, inputs)
   border-subtle: '#e9ecef'      # 1px borders & dividers
-  outline: '#6c757d'            # muted gray: captions, metadata, inactive nav
+  outline: '#646d74'            # muted gray: captions, metadata, inactive nav. Darkened from #6c757d, which sat at 4.04:1 on surface-container — below AA for normal text; now 4.54. Guarded by npm run check:contrast
   on-surface: '#1a1c1d'         # primary text & headlines on light
   on-dark: '#fafafa'            # near-white inverse ink for text/icons on filled surfaces
   # Primary — near-black ink
@@ -43,7 +43,7 @@ colors:
   dark-secondary: '#5aa2ff'
   dark-error: '#ff5449'
   dark-pedagogy: '#3ed66a'
-  dark-theory: '#a684e8'
+  dark-theory: '#ac8dea'        # lifted from #a684e8: its tag sat at 4.24:1 on the perla card's lighter dark fill
   dark-practice: '#ff9e47'
   dark-rights: '#ff6b6b'
   # Dark role aliases follow their canonical (references, add no new colors)…
