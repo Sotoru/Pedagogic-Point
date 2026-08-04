@@ -24,3 +24,8 @@
 ## Shared
 
 - [ ] Ts **.env** handling with <https://env.t3.gg/docs/nextjs> create **serverEnv.ts** & **clientEnv.ts**
+- [x] Aggiornare tutte le dipendenze possibili (minor/patch + `next` 16.3.0, poi `@types/node` allineato al runtime)
+- [ ] **TypeScript 7** (compilatore nativo Go): riaprire quando Next dichiara il supporto al porting nativo **e** `typescript-eslint` alza il peer a `<8.0.0`. Oggi il pacchetto non espone più `lib/typescript.js` (l'API vive sotto `unstable/*`), quindi il type-check di `next build` e le regole type-aware si romperebbero; inoltre tsgo scarta l'opzione tsconfig `plugins`, rendendo inerte `{ "name": "next" }`
+- [ ] **ESLint 10**: riaprire quando `eslint-plugin-react`, `eslint-plugin-import` e `eslint-plugin-jsx-a11y` dichiarano peer `^10` (oggi si fermano a `^9` e `npm install` va in `ERESOLVE`). `eslint-config-next` è già pronto (`eslint: >=9.0.0`)
+- [ ] **Node 24** (Active LTS) + `@types/node@^24`: è un cambio di runtime, non un aggiornamento di dipendenze — richiede `.nvmrc`, eventuale `engines.node` e la stessa versione nelle impostazioni Vercel
+- [ ] Advisory residui di `npm audit` senza fix reale: `postcss` (high, path traversal via `sourceMappingURL`, solo build-time) e il cluster `@pandacss/*`/`drizzle-kit`. npm propone downgrade (`@pandacss/dev@0.31.0`, `drizzle-kit@0.18.1`): **mai** `npm audit fix --force` qui
