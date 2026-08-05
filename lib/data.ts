@@ -16,19 +16,6 @@ export async function getAllArticoli(): Promise<Article[]> {
   return getDb().select().from(articles).orderBy(asc(articles.titolo));
 }
 
-// RSS: every article in the grid's own order (by PK — articles have no date
-// field, see content.ts), so the feed's sequence matches what the site shows.
-// Unlike getAllArticoli this is public-facing, so a failure degrades to an
-// empty feed rather than a 500.
-export async function getArticoliByPk(): Promise<Article[]> {
-  try {
-    return await getDb().select().from(articles).orderBy(asc(articles.id));
-  } catch (e) {
-    console.error("getArticoliByPk failed:", e);
-    return [];
-  }
-}
-
 // Admin: one article by its UUID PK, for the edit form. Null if not found.
 export async function getArticoloById(id: string): Promise<Article | null> {
   const rows = await getDb().select().from(articles).where(eq(articles.id, id)).limit(1);
