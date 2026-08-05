@@ -1,5 +1,29 @@
-import type { Article, Perla } from "@/app/content";
+import { CATEGORIE, type Article, type Perla } from "@/app/content";
 import type { ArticlePage } from "@/lib/data";
+
+// `categoria` is a plain `string` in every component that takes one, so docgen
+// gives it a free-text box. The set is closed in practice, so the stories turn it
+// into a select instead — options read from `categoryAccent` itself, which is what
+// keeps them from drifting.
+//
+// `bes` is in the list on purpose: it is a real category of 10 live articles that
+// `categoryAccent` does not map (docs/todo-list.md), and the fallback accent it
+// triggers is a state worth being able to pick.
+export const CATEGORIA_NON_MAPPATA = "bes";
+export const categoriaArgType = {
+  control: "select" as const,
+  options: [...CATEGORIE, CATEGORIA_NON_MAPPATA],
+};
+
+// Same control for the props where `null` means "no filter". A <select> option
+// cannot hold null, so the label is the option and `mapping` is what hands the
+// component the null back.
+export const TUTTE_LE_CATEGORIE = "Tutte le categorie";
+export const categoriaFiltroArgType = {
+  control: "select" as const,
+  options: [TUTTE_LE_CATEGORIE, ...CATEGORIE],
+  mapping: { [TUTTE_LE_CATEGORIE]: null },
+};
 
 // Sample content for the stories. Two rules it follows on purpose:
 //

@@ -12,7 +12,9 @@ const eslintConfig = defineConfig([
   // errors: `npm run lint` is the gate release.sh runs, and it ignores warnings.
   // The plugin is already registered by the config above — only rules here.
   // Nothing a linter can see covers colour contrast: that's check:contrast.
-  { files: ["app/**/*.tsx", "components/**/*.tsx"], rules: a11y.flatConfigs.recommended.rules },
+  // stories/ is here to keep the coverage the stories had while they lived in
+  // components/: axe sees the rendered output, this sees the markup as written.
+  { files: ["app/**/*.tsx", "components/**/*.tsx", "stories/**/*.tsx"], rules: a11y.flatConfigs.recommended.rules },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:

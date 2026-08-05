@@ -1,5 +1,5 @@
 import preview from "../.storybook/preview";
-import { ThemeToggle } from "./ThemeToggle";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const meta = preview.meta({
   title: "Components/ThemeToggle",

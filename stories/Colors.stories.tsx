@@ -1,8 +1,8 @@
-import preview from "../../.storybook/preview";
+import preview from "../.storybook/preview";
 import { semanticTokens, colorAliases } from "@/theme/tokens.gen";
 import { token } from "@/styled-system/tokens";
 import { categoryAccent, CATEGORIE } from "@/app/content";
-import { CategoryTag } from "../CategoryTag";
+import { CategoryTag } from "@/components/CategoryTag";
 import { css } from "@/styled-system/css";
 import { Flex } from "@/styled-system/jsx";
 

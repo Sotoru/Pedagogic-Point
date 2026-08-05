@@ -1,4 +1,4 @@
-import preview from "../../.storybook/preview";
+import preview from "../.storybook/preview";
 import { textStyles } from "@/theme/tokens.gen";
 import { css } from "@/styled-system/css";
 

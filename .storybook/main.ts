@@ -9,10 +9,12 @@ import type { StorybookConfig } from "@storybook/nextjs-vite";
 // declaration the Panda PostCSS plugin expands.
 const config: StorybookConfig = {
   framework: "@storybook/nextjs-vite",
-  // Colocated with the components they document, which also means
-  // `include: ["./components/**/*.{ts,tsx}"]` in panda.config already covers
-  // them — Panda extracts story styles with no config change.
-  stories: ["../components/**/*.stories.@(ts|tsx)"],
+  // Their own folder, not colocated: components/ holds components only, and the
+  // Foundations sheets are not components at all. The cost is that Panda no
+  // longer sweeps them up for free — `./stories/**/*.{ts,tsx}` is in
+  // panda.config's `include` for that reason, and without it the sheets emit no
+  // classes and render unstyled.
+  stories: ["../stories/**/*.stories.@(ts|tsx)"],
   addons: ["@storybook/addon-a11y", "@storybook/addon-vitest"],
   // Cover images resolve to public/ instead of Unsplash, so the suite doesn't
   // depend on the network for pixels.

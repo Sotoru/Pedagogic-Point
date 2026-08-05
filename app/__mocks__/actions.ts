@@ -1,7 +1,7 @@
 import { fn } from "storybook/test";
 import type { Perla } from "@/app/content";
 import type { ArticlePage } from "@/lib/data";
-import { paginaSuccessiva, perlaAlternativa } from "@/components/fixtures";
+import { paginaSuccessiva, perlaAlternativa } from "@/stories/fixtures";
 
 // Automock target for `sb.mock(import("../app/actions.ts"))` in
 // .storybook/preview. The real module is "use server" and pulls lib/db →

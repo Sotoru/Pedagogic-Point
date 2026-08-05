@@ -41,7 +41,7 @@ export default definePreview({
   ],
   parameters: {
     // Every route in this project is App Router, so next/navigation's mocks are
-    // wanted everywhere rather than per story — FilterPill's useRouter would
+    // wanted everywhere rather than per story — Dropdown's useRouter would
     // throw otherwise.
     nextjs: { appDirectory: true },
     a11y: {

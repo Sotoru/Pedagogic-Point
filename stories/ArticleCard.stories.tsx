@@ -1,5 +1,5 @@
 import preview from "../.storybook/preview";
-import { ArticleCard } from "./ArticleCard";
+import { ArticleCard } from "@/components/ArticleCard";
 import { articoli, articoloSenzaIntroduzione } from "./fixtures";
 import { articleGrid } from "@/styled-system/recipes";
 

@@ -5,7 +5,10 @@ import { categoryTag, button, articleCard, articleGrid } from "./theme/recipes";
 export default defineConfig({
   preflight: true,
   jsxFramework: "react",
-  include: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
+  // stories/ is listed because the Foundations sheets and the icons sheet style
+  // themselves with css() — extraction is what makes them render at all, not a
+  // nicety. It stopped being implied when the stories left components/.
+  include: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./stories/**/*.{ts,tsx}"],
   exclude: [],
   // Class-based theming: the layout pre-paint script sets .dark/.light on <html>.
   conditions: {

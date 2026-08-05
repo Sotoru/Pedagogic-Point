@@ -1,12 +1,14 @@
 import { expect } from "storybook/test";
 import preview from "../.storybook/preview";
-import { ArticleList } from "./ArticleList";
-import { articoli } from "./fixtures";
+import { loadMoreArticoli } from "@/app/actions";
+import { ArticleList } from "@/components/ArticleList";
+import { TUTTE_LE_CATEGORIE, articoli, categoriaFiltroArgType } from "./fixtures";
 import { articleGrid } from "@/styled-system/recipes";
 
 const meta = preview.meta({
   title: "Components/ArticleList",
   component: ArticleList,
+  argTypes: { categoria: categoriaFiltroArgType },
   args: {
     initialArticoli: articoli,
     // Non-null, so the "Carica altri" button renders at all.
@@ -14,7 +16,8 @@ const meta = preview.meta({
     // The featured article lives in the Hero, so the grid drops it — this page
     // shows one card fewer than PAGE_SIZE by design.
     featuredId: articoli[0].id,
-    categoria: null,
+    // `mapping` hands the component null for this label — see fixtures.ts.
+    categoria: TUTTE_LE_CATEGORIE,
   },
   decorators: [
     (Story) => (
@@ -35,6 +38,11 @@ export const Default = meta.story({});
 export const CaricaAltri = meta.story({
   play: async ({ canvas, userEvent }) => {
     await userEvent.click(await canvas.findByRole("button", { name: "Carica altri" }));
+
+    // The categoria arg is the label "Tutte le categorie" and the action was
+    // called with null: proof that the argTypes `mapping` runs here too, not just
+    // in the Controls panel.
+    await expect(loadMoreArticoli).toHaveBeenCalledWith(expect.any(String), null);
 
     // The appended page arrived…
     await expect(await canvas.findByText("Cercando la felicità")).toBeInTheDocument();

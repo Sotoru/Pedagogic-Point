@@ -1,6 +1,6 @@
 import { expect } from "storybook/test";
 import preview from "../.storybook/preview";
-import { PerlaPedagogica } from "./PerlaPedagogica";
+import { PerlaPedagogica } from "@/components/PerlaPedagogica";
 import { perla, perlaAlternativa } from "./fixtures";
 
 const meta = preview.meta({

@@ -1,5 +1,5 @@
 import preview from "../.storybook/preview";
-import { Wordmark } from "./Wordmark";
+import { Wordmark } from "@/components/Wordmark";
 
 const meta = preview.meta({
   title: "Brand/Wordmark",

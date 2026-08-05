@@ -1,12 +1,14 @@
 import preview from "../.storybook/preview";
-import { CategoryTag } from "./CategoryTag";
+import { CategoryTag } from "@/components/CategoryTag";
 import { CATEGORIE } from "@/app/content";
+import { CATEGORIA_NON_MAPPATA, categoriaArgType } from "./fixtures";
 import { css } from "@/styled-system/css";
 import { Flex } from "@/styled-system/jsx";
 
 const meta = preview.meta({
   title: "Components/CategoryTag",
   component: CategoryTag,
+  argTypes: { categoria: categoriaArgType },
 });
 
 // All five accents at once. This is the story that earns its keep: `practice` is
@@ -26,13 +28,13 @@ export const TutteLeCategorie = meta.story({
 });
 
 export const Singola = meta.story({
-  args: { categoria: "tutela diritti umani" },
+  args: { categoria: "bes" },
 });
 
 // An unmapped category falls back to the `secondary` accent rather than throwing.
 // 25 articles hit this branch in production today — see docs/todo-list.md.
 export const CategoriaNonMappata = meta.story({
-  args: { categoria: "bes" },
+  args: { categoria: CATEGORIA_NON_MAPPATA },
   decorators: [
     (Story) => (
       <div>

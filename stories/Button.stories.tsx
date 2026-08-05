@@ -1,5 +1,5 @@
 import preview from "../.storybook/preview";
-import { Button } from "./Button";
+import { Button } from "@/components/Button";
 import { button } from "@/styled-system/recipes";
 
 const meta = preview.meta({

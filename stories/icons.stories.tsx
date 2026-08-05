@@ -1,5 +1,5 @@
 import preview from "../.storybook/preview";
-import { ClockIcon, RefreshIcon, SunIcon, MoonIcon, ChevronDown } from "./icons";
+import { ClockIcon, RefreshIcon, SunIcon, MoonIcon, ChevronDown } from "@/components/icons";
 import { css } from "@/styled-system/css";
 import { Flex } from "@/styled-system/jsx";
 

@@ -3,7 +3,7 @@ import { resolveCategoria } from "@/app/content";
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { PerlaPedagogica } from "@/components/PerlaPedagogica";
-import { FilterPill } from "@/components/FilterPill";
+import { Dropdown } from "@/components/Dropdown";
 import { ArticleList } from "@/components/ArticleList";
 import { Footer } from "@/components/Footer";
 import { articleGrid } from "@/styled-system/recipes";
@@ -34,7 +34,10 @@ export default async function Home({
         {/* Grid shell (server): styling from the articleGrid recipe; the list +
             "Carica altri" interactivity live in the ArticleList client component. */}
         <section className={grid.root}>
-          <FilterPill categoria={categoria} />
+          <div className={grid.filter}>
+            <span className={grid.filterLabel}>Filtra per:</span>
+            <Dropdown categoria={categoria} />
+          </div>
           <h2 className={grid.heading}>Ultimi articoli</h2>
           {/* key remounts the list on filter change so its state resets to the
               new first page (a soft nav would otherwise keep it mounted). */}

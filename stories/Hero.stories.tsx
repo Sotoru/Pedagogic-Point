@@ -1,5 +1,5 @@
 import preview from "../.storybook/preview";
-import { Hero } from "./Hero";
+import { Hero } from "@/components/Hero";
 import { articoloInEvidenza } from "./fixtures";
 
 const meta = preview.meta({

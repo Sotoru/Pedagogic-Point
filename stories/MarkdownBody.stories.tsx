@@ -1,5 +1,5 @@
 import preview from "../.storybook/preview";
-import { MarkdownBody } from "./MarkdownBody";
+import { MarkdownBody } from "@/components/MarkdownBody";
 
 const meta = preview.meta({
   title: "Components/MarkdownBody",

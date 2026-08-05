@@ -1,5 +1,5 @@
 import preview from "../.storybook/preview";
-import { Footer } from "./Footer";
+import { Footer } from "@/components/Footer";
 
 const meta = preview.meta({
   title: "Layout/Footer",

@@ -1,5 +1,5 @@
 import preview from "../.storybook/preview";
-import { ReadingTime } from "./ReadingTime";
+import { ReadingTime } from "@/components/ReadingTime";
 
 const meta = preview.meta({
   title: "Components/ReadingTime",
