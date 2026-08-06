@@ -43,3 +43,7 @@ next-env.d.ts
 # design.md → Panda generated tokens + Panda codegen output
 /theme/tokens.gen.ts
 /styled-system
+
+# storybook
+/storybook-static
+*.storybook.log

@@ -183,7 +183,7 @@ To maintain a clean, professional aesthetic, this design system avoids heavy sha
 The shape language is "Soft-Professional." A 0.5rem (8px) base radius on standard surfaces (inputs, thumbnails, cards) keeps the UI modern and approachable without appearing overly playful or juvenile; pill/button controls go full-capsule and large feature surfaces step up to 16–32px.
 
 - **Standard Elements:** Input fields and article thumbnails share the base 8px radius.
-- **Buttons & Pills:** Buttons and category tags use `rounded-full` for a full-capsule shape, matching the Filter Pill.
+- **Buttons & Pills:** Buttons and category tags use `rounded-full` for a full-capsule shape, matching the filter Dropdown.
 - **Large Containers:** Educational modules or "Hero" cards may use the `rounded-lg` (16px) variant to create a distinct visual frame for high-priority content.
 - **Media & Feature Cards:** Hero imagery and the Perla Pedagogica card use `rounded-xl` at 32px (an extended step beyond the standard `rounded.xl` token) — reserved for large, full-bleed-adjacent surfaces only.
 
@@ -197,7 +197,7 @@ The shape language is "Soft-Professional." A 0.5rem (8px) base radius on standar
 - **Top Nav Bar:** Height-auto bar pinned to `container-max` width, 24px vertical / 48px horizontal padding. The active nav link is marked with a 2px solid `primary` bottom border (no background/color change); inactive links use `on-surface-variant`. Logo uses `brand-wordmark-lg`.
 - **Footer:** Same `container-max` width as the nav, 48px padding. Three-way flex layout: wordmark (`brand-wordmark-sm`) left, link list center, copyright right. Links use `label-caps` in `muted`, no separators/dividers.
 - **Perla Pedagogica (Quote Card):** Full-width `content-max` card, `rounded-xl` 32px, no border, diffused `hover-active` shadow at rest (see Elevation exception). Centered content: small icon, a `theory` category pill, then the `quote` typography style. Generous internal padding (~49px).
-- **Filter Pill:** Rounded-full (`rounded.full`) select-style control, `surface-container-low` background, 1px `border-subtle` outline, leading icon, `button` typography for the label, trailing chevron indicator.
+- **Dropdown (category filter):** Rounded-full (`rounded.full`) select-style control, `surface-container-low` background, 1px `border-subtle` outline, leading icon, `button` typography for the label, trailing chevron indicator. The control only: the "Filtra per:" caption beside it is page layout, not part of the component. Earlier revisions and ADRs 0005/0006/0012 call this the *Filter Pill*.
 - **Meta / Reading Time:** Small icon (13px) + `label-caps` text in `muted`. Used under the hero header and inside every article card footer (e.g. "5 min read", "3 min").
 - **Hero Media:** 4:3 aspect-ratio image container, `rounded-xl` 32px, 1px `outline-variant` border, no shadow.
 - **Article Grid:** 2-column layout only (independent from the 12-col hero grid), `gutter` (24px) row and column gap. Row heights are content-driven per card (masonry-like), not a fixed grid-template-row.

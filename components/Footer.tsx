@@ -33,9 +33,6 @@ export function Footer() {
         >
           <Link href="/privacy">Informativa sulla privacy</Link>
           <Link href="/termini">Termini di servizio</Link>
-          {/* Route handler, not a page: a plain anchor, so the browser fetches
-              the XML instead of attempting a client-side navigation. */}
-          <a href="/rss.xml">Feed RSS</a>
         </nav>
         <p className={meta}>© 2024 PedagogicPoint. Tutti i diritti riservati.</p>
       </Flex>

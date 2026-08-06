@@ -1,17 +1,20 @@
-import type { Metadata } from "next";
-import { Montserrat, Inter, Great_Vibes, Montez } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { fontVariables } from "./fonts";
 import "./globals.css";
-
-// design.md fonts. Montserrat/Inter are variable (no weight needed);
-// Great Vibes + Montez are single-weight display scripts for the wordmark only.
-const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" });
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const greatVibes = Great_Vibes({ subsets: ["latin"], weight: "400", variable: "--font-great-vibes" });
-const montez = Montez({ subsets: ["latin"], weight: "400", variable: "--font-montez" });
 
 export const metadata: Metadata = {
   title: "PedagogicPoint",
   description: "PedagogicPoint — articoli dinamici e perle pedagogiche.",
+};
+
+// Tinta la chrome del browser e della finestra standalone col colore di pagina.
+// Segue prefers-color-scheme, non il tema pinnato in localStorage: una meta non
+// si aggiorna a runtime e la differenza è solo cosmetica.
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f9f9fb" },
+    { media: "(prefers-color-scheme: dark)", color: "#1a1c20" },
+  ],
 };
 
 export default function RootLayout({
@@ -22,7 +25,7 @@ export default function RootLayout({
   return (
     <html
       lang="it"
-      className={`${montserrat.variable} ${inter.variable} ${greatVibes.variable} ${montez.variable}`}
+      className={fontVariables.join(" ")}
       suppressHydrationWarning
     >
       <head>

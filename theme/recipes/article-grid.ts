@@ -4,7 +4,7 @@ import { defineSlotRecipe } from "@pandacss/dev";
 // The page renders root+heading (server); ArticleList renders list+footer (client).
 export const articleGrid = defineSlotRecipe({
   className: "articleGrid",
-  slots: ["root", "heading", "list", "footer"],
+  slots: ["root", "heading", "filter", "filterLabel", "list", "footer"],
   base: {
     root: {
       marginInline: "auto",
@@ -20,6 +20,11 @@ export const articleGrid = defineSlotRecipe({
       paddingBottom: "4",
       color: "primary",
     },
+    // Dropdown is the control alone (design.md's Filter Pill). The caption
+    // beside it is page furniture, so the row that pairs the two lives here with
+    // the rest of the grid shell rather than inside the control.
+    filter: { display: "flex", alignItems: "center", gap: "3" },
+    filterLabel: { textStyle: "body-md", color: "muted" },
     list: {
       display: "grid",
       gridTemplateColumns: { base: "repeat(1, minmax(0, 1fr))", md: "repeat(2, minmax(0, 1fr))" },

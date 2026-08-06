@@ -5,7 +5,10 @@ import { categoryTag, button, articleCard, articleGrid } from "./theme/recipes";
 export default defineConfig({
   preflight: true,
   jsxFramework: "react",
-  include: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
+  // stories/ is listed because the Foundations sheets and the icons sheet style
+  // themselves with css() — extraction is what makes them render at all, not a
+  // nicety. It stopped being implied when the stories left components/.
+  include: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./stories/**/*.{ts,tsx}"],
   exclude: [],
   // Class-based theming: the layout pre-paint script sets .dark/.light on <html>.
   conditions: {
@@ -50,6 +53,16 @@ export default defineConfig({
   // categoria is chosen at runtime → emit every accent variant.
   staticCss: {
     recipes: { categoryTag: ["*"] },
+    // Every textStyle, because two consumers pick the name at runtime and Panda
+    // can only extract literals. `Wordmark` takes `variant` as a prop, so
+    // `brand-wordmark-sm` (passed from Footer) was never emitted at all and the
+    // footer wordmark rendered at the inherited size instead of 32px; the
+    // Foundations sheet iterates every name by definition. Guarded by
+    // npm run check:tokens, which fails if a declared textStyle has no class.
+    css: [{ properties: { textStyle: ["*"] } }],
   },
+  // panda.config imports these, so editing design.md or a recipe should rebuild
+  // the CSS without restarting the dev server / Storybook.
+  dependencies: ["theme/**/*.ts"],
   outdir: "styled-system",
 });
