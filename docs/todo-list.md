@@ -3,7 +3,9 @@
 ## Front end
 
 - [x] Add 404 page
-- [ ] Make the web app a PWA
+- [x] **Make the web app a PWA**: `app/manifest.ts` (Next serve `/manifest.webmanifest` e ne mette il link in ogni pagina), le due PNG che Chromium pretende (`public/icon-192.png`, `public/icon-512.png`, la seconda dichiarata anche `maskable`), `app/apple-icon.png` a 180 per la home screen iOS, e `viewport.themeColor` in `layout.tsx` per tingere la chrome standalone. Nessun service worker: non serve all'installabilità (MDN), e senza offline non avrebbe niente da fare
+  - [ ] Icona provvisoria: è il “P” di Great Vibes, lo stesso glifo del wordmark, `primary` su `surface`: il glifo estratto come path con fontTools dal TTF di Google Fonts e rasterizzato con `sips`. Da sostituire con un marchio vero (tre PNG, nessun codice) — e allora anche `app/favicon.ico`, che è ancora il triangolo di default di Next e non combacia con l'icona installata
+  - [ ] Offline: `experimental.useOffline` + l'hook `useOffline` (nativi in Next 16) per UI connectivity-aware e retry delle navigazioni; per la cache vera serve un service worker (Serwist). Riaprire se qualcuno vuole leggere gli articoli in metro
 - [ ] Add animation (SSR First, try motion)
 - [ ] Improve color system (less color e light/dark **same color palette** but **inverted**)
 - [ ] Improve card item with border on hover
