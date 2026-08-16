@@ -1,3 +1,4 @@
+// fallow-ignore-file unused-file -- run by hand (`node scripts/shot.mjs ...`), no importer by design
 // One-off visual-parity capture over the Chrome DevTools Protocol.
 // No Playwright dep: launches headless Chrome with --remote-debugging-port,
 // sets the theme via localStorage (the layout pre-paint script reads it),

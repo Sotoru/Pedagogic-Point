@@ -70,8 +70,11 @@ export function Hero({ articolo }: { articolo: Article }) {
               src={articolo.copertina}
               alt={articolo.titolo}
               fill
-              priority
-              sizes="(min-width: 768px) 58vw, 100vw"
+              // LCP element: eager + high, no <link rel=preload> (`priority` is deprecated in Next 16).
+              loading="eager"
+              fetchPriority="high"
+              // Slot is capped by content-max: (1104 - 2*48) grid, 7/12 cols with 24px gutters = 578px.
+              sizes="(min-width: 1104px) 578px, (min-width: 768px) calc(58vw - 55px), calc(100vw - 40px)"
               className={css({ objectFit: "cover" })}
             />
           </div>

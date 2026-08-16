@@ -5,7 +5,7 @@ import type { Article, Perla } from "@/app/content";
 
 // Grid page size. Articles have no date field (see content.ts), so pages are
 // ordered by primary key — stable, matches the collection's natural order.
-export const PAGE_SIZE = 6;
+const PAGE_SIZE = 6;
 
 export type ArticlePage = { articoli: Article[]; nextCursor: string | null };
 

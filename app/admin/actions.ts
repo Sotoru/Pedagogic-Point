@@ -30,7 +30,7 @@ export async function logout(): Promise<void> {
 
 // --- Article CRUD ---
 
-export type ArticleInput = {
+type ArticleInput = {
   titolo: string;
   slug: string;
   introduzione: string;

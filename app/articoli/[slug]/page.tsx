@@ -71,8 +71,11 @@ export default async function ArticoloPage({
               src={articolo.copertina}
               alt={articolo.titolo}
               fill
-              priority
-              sizes="(min-width: 768px) 1104px, 100vw"
+              // LCP element: eager + high, no <link rel=preload> (`priority` is deprecated in Next 16).
+              loading="eager"
+              fetchPriority="high"
+              // content-max 1104 minus the 48px inline padding on each side.
+              sizes="(min-width: 1104px) 1008px, (min-width: 768px) calc(100vw - 96px), calc(100vw - 40px)"
               className={css({ objectFit: "cover" })}
             />
           </div>
