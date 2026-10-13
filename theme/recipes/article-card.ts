@@ -14,9 +14,13 @@ export const articleCard = defineSlotRecipe({
       border: "1px solid",
       borderColor: "border-subtle",
       backgroundColor: "surface",
-      transitionProperty: "border-color",
+      transitionProperty: "border-color, transform",
       transitionDuration: "150ms",
+      transitionTimingFunction: "ease-out",
       _hover: { borderColor: "primary" },
+      // :active reaches the card through the stretched link inside it. Smaller
+      // than the button's 0.97: on a surface this big that reads as a lurch.
+      _active: { transform: "scale(0.99)" },
       // The stretched link's own ring would outline just the title text, leaving
       // a keyboard user unsure what they are about to activate. Ring the card
       // instead. Nesting the link's outline:none inside the :has() means a

@@ -15,6 +15,9 @@ export default defineConfig({
     extend: {
       dark: ".dark &",
       light: ".light &",
+      // Touch browsers fire :hover on tap and keep it until the next tap
+      // elsewhere, leaving cards/buttons stuck in their hover state.
+      hover: ["@media (hover: hover)", "&:is(:hover, [data-hover])"],
     },
   },
   theme: {
@@ -27,6 +30,11 @@ export default defineConfig({
           inter: { value: "var(--font-inter), system-ui, sans-serif" },
           script: { value: "var(--font-great-vibes), var(--font-montez), cursive" },
         },
+      },
+      keyframes: {
+        spin: { to: { transform: "rotate(360deg)" } },
+        fadeIn: { from: { opacity: 0 } },
+        fadeUp: { from: { opacity: 0, transform: "translateY(8px)" } },
       },
       semanticTokens,
       textStyles,
@@ -48,6 +56,16 @@ export default defineConfig({
       fontFamily: "inter",
       WebkitFontSmoothing: "antialiased",
       MozOsxFontSmoothing: "grayscale",
+    },
+    // Press-scale stays (tiny, non-vestibular); spins, fades and the theme
+    // cross-fade go. ThemeToggle also skips startViewTransition on its own.
+    // Cover morph between card/hero and article page (see CoverTransition).
+    "::view-transition-group(.morph)": { animationDuration: "400ms" },
+    "@media (prefers-reduced-motion: reduce)": {
+      "*, *::before, *::after": { animation: "none !important" },
+      "::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*)": {
+        animation: "none !important",
+      },
     },
   },
   // categoria is chosen at runtime → emit every accent variant.

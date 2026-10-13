@@ -25,6 +25,14 @@
   - [x] Compilare titolare ed email in `/privacy` e `/termini` (bozze fattuali, **non** consulenza legale: da rileggere se il sito cambia comportamento)
   - [ ] Collegare il tema scuro di MDXEditor (oggi la sua chrome resta chiara sotto il nostro `.dark`): poi il literal `#646d74` in `BodyEditor.tsx` può tornare al token `muted`
 - [ ] **Categorie disallineate fra codice e dati**: `app/content.ts` mappa `curiosità` (à) mentre le righe dicono `curiositá` (á, 14 articoli) più una `Curiositá` (1), e `bes` (10 articoli) non è mappata affatto. Effetti: l'opzione "curiosità" del filtro dà zero risultati, i `bes` non sono filtrabili, e 25 articoli mostrano il tag col colore di fallback (`secondary`). Da decidere: normalizzare le righe con un `UPDATE` e/o aggiungere `bes` a `categoryAccent` con un accento assegnato. NB: sistemandolo, `practice` verrà reso per la prima volta — i contrasti sono già a norma, quindi si può fare senza far emergere difetti
+- [x] Feedback alla pressione (`_active` scale) su bottoni, card, toggle tema e refresh Perla; `_hover` limitato a `@media (hover: hover)` (niente hover "incollato" su touch)
+- [x] Perla: icona refresh che ruota durante il caricamento + dissolvenza della nuova citazione
+- [x] Cambio tema in dissolvenza incrociata via View Transitions (salto se `prefers-reduced-motion`)
+- [x] Filtro categoria: `aria-busy` invece di `disabled` (il focus non cade più su `<body>` durante la navigazione)
+- [x] Transizione condivisa card/hero → articolo sull'immagine di copertina (`components/CoverTransition.tsx`, `<ViewTransition share="morph">` di React). Funziona solo se la destinazione è già nella cache del client al click: i link vengono prefetchati quando entrano nel viewport
+- [ ] Morph della copertina anche al ritorno (articolo → home): oggi la home legge `?categoria`, è dinamica e non viene mai prefetchata per intero, quindi la coppia non si forma e la copertina esce con la pagina. Possibili strade: un `loading.js`, oppure Cache Components / Partial Prefetching
+- [x] "Carica altri": dissolvenza sfalsata delle nuove card (opacità + `translateY` 8px)
+- [x] Tipografia: `headline-md` a `-0.01em` come `display-lg-mobile`; i textStyles escono in `rem` con interlinea senza unità (`scripts/dtcg-to-panda.mjs`), così seguono la dimensione del testo scelta nel browser
 
 ## Back end
 
@@ -50,4 +58,5 @@
 - [x] `scripts/release.sh`: il commit di rilascio su `main` ha ora **due parent**, così la storia granulare di `develop` non si perde più (prima lo squash la rendeva non raggiungibile da `main`). `git log --first-parent main` resta il log dei soli rilasci — vedi ADR 0007
 - [ ] Warning console in home: l'immagine dell'hero (`components/Hero.tsx:73`, `priority`) viene **preloaded ma non usata** — il candidato `srcset` scelto al render non è quello preloadato. Verificare `sizes` sull'`Image`
 - [x] `fallow`: azzerate le 8 segnalazioni di dead code. Sei erano export pubblici usati solo nel proprio file (`montserrat`/`inter`/`greatVibes`/`montez` in `app/fonts.ts` — solo `fontVariables` esce; `PAGE_SIZE` in `lib/data.ts`; il tipo `ArticleInput` in `app/admin/actions.ts`): togliere `export` restringe l'API invece di silenziare il controllo. Due erano file raggiunti fuori dal grafo degli import (`app/__mocks__/actions.ts` via la convenzione `__mocks__` di Storybook, `scripts/shot.mjs` lanciato a mano) e portano un `fallow-ignore-file` con la motivazione
+- [x] Storybook 10.5.6 → 10.6.2 (`storybook upgrade`) + `@storybook/addon-mcp` (comandi `storybook ai`); l'automigrazione ha anche registrato `eslint-plugin-storybook` in `eslint.config.mjs`
 - [ ] Advisory residui di `npm audit` senza fix reale: `postcss` (high, path traversal via `sourceMappingURL`, solo build-time) e il cluster `@pandacss/*`/`drizzle-kit`. npm propone downgrade (`@pandacss/dev@0.31.0`, `drizzle-kit@0.18.1`): **mai** `npm audit fix --force` qui

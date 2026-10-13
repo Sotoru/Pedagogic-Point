@@ -35,7 +35,10 @@ export function Dropdown({ categoria }: { categoria: string | null }) {
       <select
         defaultValue={categoria ?? ""}
         onChange={onChange}
-        disabled={pending}
+        // aria-busy, not disabled: disabling drops focus to <body> mid-navigation
+        // (same reason as ArticleList's button), and a newer router.push
+        // simply supersedes the pending one.
+        aria-busy={pending}
         aria-label="Filtra articoli per categoria"
         className={css({
           textStyle: "button",
@@ -51,7 +54,7 @@ export function Dropdown({ categoria }: { categoria: string | null }) {
           paddingInline: "4",
           paddingRight: "9", // room for the chevron overlay
           cursor: "pointer",
-          _disabled: { opacity: 0.6, cursor: "wait" },
+          "&[aria-busy=true]": { opacity: 0.6, cursor: "wait" },
         })}
       >
         <option value="">Tutte le categorie</option>

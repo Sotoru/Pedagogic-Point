@@ -25,6 +25,9 @@ export function ArticleList({
 }) {
   const [articoli, setArticoli] = useState(initialArticoli);
   const [cursor, setCursor] = useState(initialCursor);
+  // Index in `articoli` where the latest appended page begins; null until the
+  // first "Carica altri", so the server-rendered cards never animate.
+  const [batchStart, setBatchStart] = useState<number | null>(null);
   const [pending, startTransition] = useTransition();
   // Starts empty so mounting the live region announces nothing; it only speaks
   // once a click has actually appended cards.
@@ -37,12 +40,18 @@ export function ArticleList({
     if (pending || !cursor) return;
     startTransition(async () => {
       const page = await loadMoreArticoli(cursor, categoria);
+      setBatchStart(articoli.length);
       setArticoli((prev) => [...prev, ...page.articoli]);
       setCursor(page.nextCursor);
       setAnnuncio(`${page.articoli.length} articoli caricati.`);
     });
   };
 
+  const enterDelay = (a: Article) => {
+    if (batchStart == null) return undefined;
+    const i = articoli.indexOf(a);
+    return i < batchStart ? undefined : (i - batchStart) * 30;
+  };
   const visibili = articoli.filter((a) => a.id !== featuredId);
 
   if (visibili.length === 0) {
@@ -59,7 +68,7 @@ export function ArticleList({
     <>
       <div className={s.list}>
         {visibili.map((a) => (
-          <ArticleCard key={a.id} articolo={a} />
+          <ArticleCard key={a.id} articolo={a} enterDelay={enterDelay(a)} />
         ))}
       </div>
       {/* Appending cards changes the page silently otherwise: nothing tells a
