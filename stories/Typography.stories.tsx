@@ -35,7 +35,7 @@ const row = css({
   alignItems: "baseline",
   paddingBlock: "6",
   borderTop: "1px solid",
-  borderColor: "border-subtle",
+  borderTopColor: "border-subtle",
 });
 
 const specs = (name: StyleName) => {

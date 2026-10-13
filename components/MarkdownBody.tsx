@@ -12,7 +12,7 @@ const prose = css({
     marginTop: "6",
     paddingLeft: "5",
     borderLeft: "3px solid",
-    borderColor: "primary",
+    borderLeftColor: "primary",
     color: "muted",
   },
   "& ul": { marginTop: "4", listStyleType: "disc", paddingLeft: "6" },

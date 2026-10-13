@@ -4,6 +4,9 @@ import { categoryTag, button, articleCard, articleGrid } from "./theme/recipes";
 
 export default defineConfig({
   preflight: true,
+  // v2 no longer adds these implicitly; listing them keeps v1's utilities,
+  // patterns (Flex, styled) and breakpoints.
+  presets: ["@pandacss/preset-base", "@pandacss/preset-panda"],
   jsxFramework: "react",
   // stories/ is listed because the Foundations sheets and the icons sheet style
   // themselves with css() — extraction is what makes them render at all, not a
@@ -17,7 +20,7 @@ export default defineConfig({
       light: ".light &",
       // Touch browsers fire :hover on tap and keep it until the next tap
       // elsewhere, leaving cards/buttons stuck in their hover state.
-      hover: ["@media (hover: hover)", "&:is(:hover, [data-hover])"],
+      hover: { "@media (hover: hover)": { "&:is(:hover, [data-hover])": "@slot" } },
     },
   },
   theme: {
