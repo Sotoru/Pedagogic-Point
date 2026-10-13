@@ -1,7 +1,8 @@
 {
   "name": "pedagogic-point",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "private": true,
+  "type": "module",
   "scripts": {
     "tokens": "design.md export docs/design.md --format dtcg | node scripts/dtcg-to-panda.mjs docs/design.md > theme/tokens.gen.ts",
     "prepare": "npm run tokens && panda codegen",
