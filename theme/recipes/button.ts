@@ -8,8 +8,11 @@ export const button = defineRecipe({
     textStyle: "button",
     borderRadius: "full",
     cursor: "pointer",
-    transitionProperty: "background-color, border-color, color",
+    transitionProperty: "background-color, border-color, color, transform",
     transitionDuration: "150ms",
+    transitionTimingFunction: "ease-out",
+    // Feedback on press, not release: hover never fires on touch.
+    _active: { transform: "scale(0.97)" },
     _disabled: { opacity: 0.5, cursor: "default" },
   },
   variants: {

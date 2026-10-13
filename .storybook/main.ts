@@ -15,7 +15,7 @@ const config: StorybookConfig = {
   // panda.config's `include` for that reason, and without it the sheets emit no
   // classes and render unstyled.
   stories: ["../stories/**/*.stories.@(ts|tsx)"],
-  addons: ["@storybook/addon-a11y", "@storybook/addon-vitest"],
+  addons: ["@storybook/addon-a11y", "@storybook/addon-vitest", "@storybook/addon-mcp"],
   // Cover images resolve to public/ instead of Unsplash, so the suite doesn't
   // depend on the network for pixels.
   staticDirs: ["../public"],

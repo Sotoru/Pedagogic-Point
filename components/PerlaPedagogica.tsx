@@ -71,13 +71,16 @@ export function PerlaPedagogica({ initialPerla }: { initialPerla: Perla | null }
               padding: "2",
               color: "primary",
               boxShadow: chipShadow,
-              transitionProperty: "box-shadow",
+              transitionProperty: "box-shadow, transform",
               transitionDuration: "150ms",
+              transitionTimingFunction: "ease-out",
               _hover: { boxShadow: restShadow },
+              _active: { transform: "scale(0.9)" },
               _disabled: { cursor: "default", opacity: 0.5 },
             })}
           >
-            <RefreshIcon />
+            {/* Spins while the server action runs: status feedback, not decoration. */}
+            <RefreshIcon className={pending ? css({ animation: "spin 0.8s linear infinite" }) : undefined} />
           </button>
           {/* Decorative closing double-quote mark (looks like "99"), not the digits. */}
           <div
@@ -91,7 +94,11 @@ export function PerlaPedagogica({ initialPerla }: { initialPerla: Perla | null }
               new perla instead of swapping it in silently. The region ships with
               its content already in place, so mounting announces nothing. */}
           <p role="status" className={css({ textStyle: "quote", marginTop: "4", color: "primary" })}>
-            &ldquo;{perla.contenuto}&rdquo;
+            {/* key remounts only this span, so the new quote fades in while the
+                live region itself stays mounted and keeps announcing. */}
+            <span key={perla.contenuto} className={css({ animation: "fadeIn 200ms ease-out" })}>
+              &ldquo;{perla.contenuto}&rdquo;
+            </span>
           </p>
         </div>
       </div>

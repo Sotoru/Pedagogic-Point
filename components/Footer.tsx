@@ -8,7 +8,7 @@ import { Flex } from "@/styled-system/jsx";
 export function Footer() {
   const meta = css({ textStyle: "label-caps", color: "muted" });
   return (
-    <footer className={css({ borderTop: "1px solid", borderColor: "border-subtle" })}>
+    <footer className={css({ borderTop: "1px solid", borderTopColor: "border-subtle" })}>
       <Flex
         direction={{ base: "column", md: "row" }}
         align="center"

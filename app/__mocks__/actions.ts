@@ -1,3 +1,4 @@
+// fallow-ignore-file unused-file -- resolved by Storybook's __mocks__ convention from sb.mock(), never imported
 import { fn } from "storybook/test";
 import type { Perla } from "@/app/content";
 import type { ArticlePage } from "@/lib/data";

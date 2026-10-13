@@ -73,9 +73,14 @@ for (const name of keys(dtcg.typography)) {
   const token = FONT_TOKEN[v.fontFamily];
   if (!token) throw new Error(`unknown font family "${v.fontFamily}" for ${name} — add it to FONT_TOKEN`);
   const style = { fontFamily: `{fonts.${token}}` };
-  if (v.fontSize) style.fontSize = dim(v.fontSize);
+  // design.md speaks px; the page speaks rem + unitless leading, so text and its
+  // line height follow the reader's browser font-size setting. At the default
+  // 16px root this renders pixel-identical to the px values.
+  const px = v.fontSize && (v.fontSize.unit === "px" ? v.fontSize.value : null);
+  if (v.fontSize) style.fontSize = px != null ? `${px / 16}rem` : dim(v.fontSize);
   if (v.fontWeight) style.fontWeight = String(v.fontWeight);
-  if (v.lineHeight != null) style.lineHeight = `${v.lineHeight}px`; // DTCG drops the px unit
+  // DTCG drops lineHeight's px unit; divide by the px size for a ratio.
+  if (v.lineHeight != null) style.lineHeight = px ? String(+(v.lineHeight / px).toFixed(4)) : `${v.lineHeight}px`;
   if (v.letterSpacing) style.letterSpacing = dim(v.letterSpacing);
   // frontmatter-only props
   const fmType = front.typography?.[name] ?? {};

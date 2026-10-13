@@ -6,6 +6,7 @@ import { getArticoloBySlug } from "@/lib/data";
 import { letturaTime, excerpt } from "@/app/content";
 import { cleanHtml } from "@/lib/html";
 import { CategoryTag } from "@/components/CategoryTag";
+import { CoverTransition } from "@/components/CoverTransition";
 import { ReadingTime } from "@/components/ReadingTime";
 import { MarkdownBody } from "@/components/MarkdownBody";
 import { Nav } from "@/components/Nav";
@@ -57,25 +58,30 @@ export default async function ArticoloPage({
             paddingTop: { base: "8", md: "12" },
           })}
         >
-          <div
-            className={css({
-              position: "relative",
-              aspectRatio: { base: "4/3", md: "2/1" },
-              overflow: "hidden",
-              borderRadius: "32px",
-              border: "1px solid",
-              borderColor: "outline-variant",
-            })}
-          >
-            <Image
-              src={articolo.copertina}
-              alt={articolo.titolo}
-              fill
-              priority
-              sizes="(min-width: 768px) 1104px, 100vw"
-              className={css({ objectFit: "cover" })}
-            />
-          </div>
+          <CoverTransition slug={articolo.slug}>
+            <div
+              className={css({
+                position: "relative",
+                aspectRatio: { base: "4/3", md: "2/1" },
+                overflow: "hidden",
+                borderRadius: "32px",
+                border: "1px solid",
+                borderColor: "outline-variant",
+              })}
+            >
+              <Image
+                src={articolo.copertina}
+                alt={articolo.titolo}
+                fill
+                // LCP element: eager + high, no <link rel=preload> (`priority` is deprecated in Next 16).
+                loading="eager"
+                fetchPriority="high"
+                // content-max 1104 minus the 48px inline padding on each side.
+                sizes="(min-width: 1104px) 1008px, (min-width: 768px) calc(100vw - 96px), calc(100vw - 40px)"
+                className={css({ objectFit: "cover" })}
+              />
+            </div>
+          </CoverTransition>
         </div>
 
         {/* Reading column (~720px for comfortable line length). */}

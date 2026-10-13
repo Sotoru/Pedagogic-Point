@@ -59,7 +59,7 @@ function Row({ name }: { name: string }) {
         alignItems: "center",
         paddingBlock: "4",
         borderTop: "1px solid",
-        borderColor: "border-subtle",
+        borderTopColor: "border-subtle",
       })}
     >
       <Swatch name={name} />
@@ -135,7 +135,7 @@ function ColorSheet() {
               gap: "4",
               paddingBlock: "4",
               borderTop: "1px solid",
-              borderColor: "border-subtle",
+              borderTopColor: "border-subtle",
             })}
           >
             <Flex align="center" gap="3" minWidth="260px">

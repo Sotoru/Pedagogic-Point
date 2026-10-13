@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Article } from "@/app/content";
 import { letturaTime } from "@/app/content";
 import { CategoryTag } from "./CategoryTag";
+import { CoverTransition } from "./CoverTransition";
 import { ReadingTime } from "./ReadingTime";
 import { css } from "@/styled-system/css";
 
@@ -56,25 +57,30 @@ export function Hero({ articolo }: { articolo: Article }) {
           </div>
         </div>
         <div className={css({ gridColumn: { md: "span 7" } })}>
-          <div
-            className={css({
-              position: "relative",
-              aspectRatio: "4/3",
-              overflow: "hidden",
-              borderRadius: "32px",
-              border: "1px solid",
-              borderColor: "outline-variant",
-            })}
-          >
-            <Image
-              src={articolo.copertina}
-              alt={articolo.titolo}
-              fill
-              priority
-              sizes="(min-width: 768px) 58vw, 100vw"
-              className={css({ objectFit: "cover" })}
-            />
-          </div>
+          <CoverTransition slug={articolo.slug}>
+            <div
+              className={css({
+                position: "relative",
+                aspectRatio: "4/3",
+                overflow: "hidden",
+                borderRadius: "32px",
+                border: "1px solid",
+                borderColor: "outline-variant",
+              })}
+            >
+              <Image
+                src={articolo.copertina}
+                alt={articolo.titolo}
+                fill
+                // LCP element: eager + high, no <link rel=preload> (`priority` is deprecated in Next 16).
+                loading="eager"
+                fetchPriority="high"
+                // Slot is capped by content-max: (1104 - 2*48) grid, 7/12 cols with 24px gutters = 578px.
+                sizes="(min-width: 1104px) 578px, (min-width: 768px) calc(58vw - 55px), calc(100vw - 40px)"
+                className={css({ objectFit: "cover" })}
+              />
+            </div>
+          </CoverTransition>
         </div>
       </div>
     </section>

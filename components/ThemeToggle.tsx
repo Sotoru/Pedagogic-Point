@@ -8,7 +8,7 @@ import { css } from "@/styled-system/css";
 // `.light` on <html>. Clicking pins an explicit choice. Icon swap is CSS-driven
 // (_dark condition), so no React state and no hydration mismatch.
 export function ThemeToggle() {
-  const toggle = () => {
+  const apply = () => {
     const root = document.documentElement;
     const next = !root.classList.contains("dark");
     root.classList.toggle("dark", next);
@@ -18,6 +18,13 @@ export function ThemeToggle() {
     } catch {
       // ponytail: private-mode / storage-blocked — choice just won't persist
     }
+  };
+
+  // Cross-fade the whole page instead of an instant light↔dark brightness jump.
+  // Browsers without View Transitions, and reduced motion, just swap.
+  const toggle = () => {
+    if (!document.startViewTransition || matchMedia("(prefers-reduced-motion: reduce)").matches) apply();
+    else document.startViewTransition(apply);
   };
 
   return (
@@ -30,9 +37,11 @@ export function ThemeToggle() {
         borderRadius: "full",
         padding: "2",
         color: "on-surface-variant",
-        transitionProperty: "color",
+        transitionProperty: "color, transform",
         transitionDuration: "150ms",
+        transitionTimingFunction: "ease-out",
         _hover: { color: "primary" },
+        _active: { transform: "scale(0.9)" },
       })}
     >
       <SunIcon className={css({ display: { base: "block", _dark: "none" } })} />

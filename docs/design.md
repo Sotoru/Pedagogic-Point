@@ -72,6 +72,7 @@ typography:
     fontSize: 32px
     fontWeight: '600'
     lineHeight: 40px
+    letterSpacing: -0.01em
   headline-sm:
     fontFamily: Montserrat
     fontSize: 24px

@@ -8,10 +8,11 @@ import { Montserrat, Inter, Great_Vibes, Montez } from "next/font/google";
 //
 // Montserrat/Inter are variable (no weight needed); Great Vibes + Montez are
 // single-weight display scripts for the wordmark only.
-export const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" });
-export const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-export const greatVibes = Great_Vibes({ subsets: ["latin"], weight: "400", variable: "--font-great-vibes" });
-export const montez = Montez({ subsets: ["latin"], weight: "400", variable: "--font-montez" });
+// Local, not exported: `fontVariables` below is the only thing either root needs.
+const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const greatVibes = Great_Vibes({ subsets: ["latin"], weight: "400", variable: "--font-great-vibes" });
+const montez = Montez({ subsets: ["latin"], weight: "400", variable: "--font-montez" });
 
 // The generated class names, each of which declares one CSS var. They belong on
 // <html>: `body { font-family: var(--fonts-inter) }` is computed on the body, so
