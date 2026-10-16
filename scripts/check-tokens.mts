@@ -1,16 +1,3 @@
-// Every declared textStyle must actually produce a class (run: npm run check:tokens).
-//
-// Why this exists: Panda extracts statically, so `css({ textStyle: variant })`
-// with a runtime value emits nothing. `Wordmark` takes `variant` as a prop, and
-// `brand-wordmark-sm` — passed from Footer.tsx — had no class in the output at
-// all: the footer wordmark rendered at the inherited size instead of design.md's
-// 32px, silently, for as long as the component existed. Nothing caught it,
-// because a missing class is not a violation of anything — it is just absence.
-//
-// `staticCss` now forces every textStyle. This check is what keeps that true:
-// it fails if design.md declares a type style the CSS doesn't carry. Instant, no
-// browser, no database, no network — so unlike check:a11y it belongs in the
-// release gate. See ADR 0012.
 import { execFileSync } from "node:child_process";
 import { readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";

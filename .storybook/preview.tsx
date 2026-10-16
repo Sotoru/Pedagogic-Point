@@ -45,8 +45,6 @@ export default definePreview({
     // throw otherwise.
     nextjs: { appDirectory: true },
     a11y: {
-      // Same conformance target as scripts/check-a11y.mjs, from one shared
-      // constant so the two runners can't drift. See ADR 0011.
       options: { runOnly: WCAG_TAGS },
       // Violations fail `npm run check:stories`, not just the addon panel.
       test: "error",

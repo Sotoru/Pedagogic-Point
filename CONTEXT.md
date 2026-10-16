@@ -83,7 +83,7 @@ _Avoid_: Quote card, pearl.
 An article's estimated read duration, shown as an icon + `label-caps` meta text
 (e.g. "5 min read", "3 min").
 
-## Styling (Panda, bound to design.md — see ADR 0004)
+## Styling (Panda, bound to design.md)
 
 **Generated token preset** (`theme/tokens.gen.ts`):
 The Panda tokens/semanticTokens/textStyles compiled from `docs/design.md` by

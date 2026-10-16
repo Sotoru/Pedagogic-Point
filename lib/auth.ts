@@ -1,10 +1,6 @@
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 
-// Fake single-password admin auth (see ADR 0010). A successful login mints a
-// short JWT signed with ADMIN_SESSION_SECRET and stores it in an httpOnly
-// cookie; the middleware and every write action verify it. There are no users
-// — the token only asserts "this browser passed the password gate".
 
 export const SESSION_COOKIE = "pp_admin";
 const MAX_AGE_SECONDS = 60 * 60 * 8; // 8h

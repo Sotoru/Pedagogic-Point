@@ -24,9 +24,6 @@ const meta = preview.meta({
   },
 });
 
-// design.md's secondary button: 1px primary outline that fills on hover, full
-// capsule per ADR 0006. The hover label is `on-primary`, not a fixed light ink —
-// primary flips near-white in dark mode and a fixed ink sat at 1.19:1 there.
 export const Outline = meta.story({});
 
 // aria-disabled, not disabled: ArticleList needs the button to stay focusable

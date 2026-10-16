@@ -6,16 +6,6 @@ import { CategoryTag } from "@/components/CategoryTag";
 import { css } from "@/styled-system/css";
 import { Flex } from "@/styled-system/jsx";
 
-// The whole colour system in one view, generated from theme/tokens.gen.ts.
-//
-// The split that matters, and that no other view in the project shows: design.md
-// declares 13 unique colours and 8 role names pointing at them. `colorAliases`
-// carries that structure through the DTCG transform, which otherwise resolves
-// references away and leaves 21 apparently-independent colours (ADR 0004).
-//
-// Each row shows a live swatch — a CSS var, so it follows the active scheme — plus
-// both declared hex values as text, because the point of a palette sheet is to
-// compare light against dark and a themed swatch can only ever show one of them.
 
 const colors = semanticTokens.colors as Record<string, { value: { base: string; _dark?: string } }>;
 const NAMES = Object.keys(colors);
@@ -142,8 +132,6 @@ function ColorSheet() {
               <Swatch name={categoryAccent[c]} />
               <span className={css({ textStyle: "label-caps", color: "primary" })}>{categoryAccent[c]}</span>
             </Flex>
-            {/* The tag as it really renders: a 10% tint of the accent, with the ink
-                mixed toward on-surface in light mode only (TAG_INK, ADR 0011). */}
             <CategoryTag categoria={c} />
           </li>
         ))}
@@ -159,9 +147,6 @@ const meta = preview.meta({
 
 export const Light = meta.story({});
 
-// The dark pass, and the one place axe sees the dark scheme live: the suite runs
-// light only because check:contrast already walks every declared pair in both
-// schemes. Here it sees all 21 tokens and all five tags at once. See ADR 0012.
 export const Dark = meta.story({
   globals: { theme: "dark" },
 });

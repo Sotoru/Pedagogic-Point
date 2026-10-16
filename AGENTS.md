@@ -19,8 +19,20 @@ Context7 MCP also indexes Panda CSS — prefer it for scoped lookups.
 
 <!-- Nothing hand-written above the END marker: `next dev` rewrites that block. -->
 
-# TODO list
+# Guide
 
-Whenever you resolve an issue or fix a bug, check off the matching item in `docs/todo-list.md` (`- [ ]` → `- [x]`). Add it there first if it's missing.
+- [docs/design.md](docs/design.md): token, tipografia e componenti; fonte dei token Panda
+- [docs/git.md](docs/git.md): commit, tag di versione, deploy
 
-Also add a new item to `docs/todo-list.md` whenever an interesting idea comes up in conversation, or when the user says to add it.
+# Commit
+
+Conventional Commits; prima di pushare su `main` leggere `docs/git.md`.
+
+# Verifica obbligatoria
+
+```sh
+npm run lint
+npm run build
+npm run check:contrast
+npm run check:tokens
+```

@@ -31,10 +31,6 @@ const meta = preview.meta({
 
 export const Default = meta.story({});
 
-// The one interaction in this project that changes the accessibility tree, and
-// until now nothing exercised it: check:a11y crawls the home page but never
-// clicks, so the live region was audited empty every single run. ADR 0011 lists
-// "cambi asincroni annunciati" as deliberate work — this is the test that says so.
 export const CaricaAltri = meta.story({
   play: async ({ canvas, userEvent }) => {
     await userEvent.click(await canvas.findByRole("button", { name: "Carica altri" }));

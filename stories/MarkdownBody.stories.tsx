@@ -6,9 +6,6 @@ const meta = preview.meta({
   component: MarkdownBody,
 });
 
-// Every element the prose styles actually target, in one body. Raw HTML parsing
-// is disabled in the component (`disableParsingRawHTML`), so the markdown here is
-// the whole surface — ADR 0008 keeps article bodies free of inline HTML.
 const CAMPIONE = `
 ## Il linguaggio come sistema
 

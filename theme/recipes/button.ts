@@ -1,7 +1,5 @@
 import { defineRecipe } from "@pandacss/dev";
 
-// design.md: secondary button = 1px primary outline, fills on hover.
-// Radius: full capsule (ADR 0006) — supersedes design.md's 8px for buttons.
 export const button = defineRecipe({
   className: "button",
   base: {

@@ -9,14 +9,6 @@ import a11y from "eslint-plugin-jsx-a11y";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  // eslint-config-next enables only 6 of the ~35 jsx-a11y rules (the aria-* and
-  // alt-text ones), so the checks that catch unlabelled controls, dead hrefs and
-  // mouse-only handlers are off by default. Turn on the full recommended set as
-  // errors: `npm run lint` is the gate release.sh runs, and it ignores warnings.
-  // The plugin is already registered by the config above — only rules here.
-  // Nothing a linter can see covers colour contrast: that's check:contrast.
-  // stories/ is here to keep the coverage the stories had while they lived in
-  // components/: axe sees the rendered output, this sees the markup as written.
   { files: ["app/**/*.tsx", "components/**/*.tsx", "stories/**/*.tsx"], rules: a11y.flatConfigs.recommended.rules },
   // Override default ignores of eslint-config-next.
   globalIgnores([

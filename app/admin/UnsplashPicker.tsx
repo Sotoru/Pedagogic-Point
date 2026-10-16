@@ -5,15 +5,6 @@ import Image from "next/image";
 import { searchUnsplash, triggerUnsplashDownload, type UnsplashPhoto } from "./unsplash";
 import { css } from "@/styled-system/css";
 
-// Cover picker: opens a modal, searches Unsplash server-side (key stays on the
-// server), shows a grid, and on select writes urls.regular into the copertina
-// field (+ fires the required Unsplash download trigger). See ADR 0010.
-//
-// A native <dialog> driven by showModal() carries the modal behaviour we'd
-// otherwise hand-roll: Escape to dismiss, focus trapped inside, the rest of the
-// page inert, role="dialog" + aria-modal implicit, and ::backdrop for the dim.
-// It is always rendered (a closed dialog is display:none), so the DOM holds the
-// open/closed state and Escape can't desync a React flag.
 export function UnsplashPicker({ onSelect }: { onSelect: (url: string) => void }) {
   const ref = useRef<HTMLDialogElement>(null);
   const [query, setQuery] = useState("");

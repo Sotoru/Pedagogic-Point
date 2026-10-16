@@ -1,14 +1,3 @@
-// WCAG contrast guard for the design tokens (run: npm run check:contrast).
-//
-// Why this exists alongside npm run check:a11y: axe measures what is on screen
-// during a crawl, so it only sees the combinations the current data happens to
-// render. When this script was written, `practice` was mapped by no article at
-// all and `pedagogy` by two out of 74 — their tags failed at 2.23:1 and 2.69:1
-// and an axe run would have called the site clean. This checks every declared
-// pair instead, whether or not the DB currently produces it. See ADR 0011.
-//
-// Thresholds: 4.5 for normal text (WCAG 1.4.3 AA — the tags are 12px, the meta
-// row 13px, so nothing here qualifies as "large"), 3.0 for non-text UI (1.4.11).
 import assert from "node:assert";
 import { semanticTokens } from "../theme/tokens.gen.ts";
 import { TAG_INK, type TagAccent } from "../theme/recipes/category-tag.ts";

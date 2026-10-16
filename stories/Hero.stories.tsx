@@ -14,9 +14,6 @@ const meta = preview.meta({
 // the click target actually is.
 export const Default = meta.story({});
 
-// The only h1 on the site lives here. ADR 0011 records why there is no fallback:
-// getFeatured() degrades to the first article by id, so the heading disappears
-// only when the database is empty.
 export const TitoloLungo = meta.story({
   args: {
     articolo: {

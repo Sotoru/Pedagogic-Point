@@ -1,14 +1,6 @@
 import { CATEGORIE, type Article, type Perla } from "@/app/content";
 import type { ArticlePage } from "@/lib/data";
 
-// `categoria` is a plain `string` in every component that takes one, so docgen
-// gives it a free-text box. The set is closed in practice, so the stories turn it
-// into a select instead — options read from `categoryAccent` itself, which is what
-// keeps them from drifting.
-//
-// `bes` is in the list on purpose: it is a real category of 10 live articles that
-// `categoryAccent` does not map (docs/todo-list.md), and the fallback accent it
-// triggers is a state worth being able to pick.
 export const CATEGORIA_NON_MAPPATA = "bes";
 export const categoriaArgType = {
   control: "select" as const,
@@ -25,13 +17,6 @@ export const categoriaFiltroArgType = {
   mapping: { [TUTTE_LE_CATEGORIE]: null },
 };
 
-// Sample content for the stories. Two rules it follows on purpose:
-//
-// - Covers point at a local file, not Unsplash, so no story needs the network.
-// - The `categoria` values are real keys of `categoryAccent` in app/content.ts,
-//   because an unmapped category silently falls back to the `secondary` accent —
-//   which is exactly the defect docs/todo-list.md records for the live data, and
-//   fixtures that reproduce it would hide it instead of showing it.
 const COVER = "/placeholder-cover.svg";
 
 const base = {

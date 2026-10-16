@@ -2,9 +2,6 @@
 
 import { isAuthed } from "@/lib/auth";
 
-// Unsplash photo search for the cover picker (see ADR 0010). Runs server-side
-// so UNSPLASH_ACCESS_KEY never reaches the client. Admin-gated. Also fires the
-// required download trigger when a photo is picked, per Unsplash API guidelines.
 
 export type UnsplashPhoto = {
   id: string;

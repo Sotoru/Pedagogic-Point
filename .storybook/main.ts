@@ -1,12 +1,5 @@
 import type { StorybookConfig } from "@storybook/nextjs-vite";
 
-// Vite, not webpack: the Vitest addon only runs on a Vite builder, and this
-// project has no webpack or babel customisation to preserve (next.config.ts
-// carries images.remotePatterns and nothing else). See ADR 0012.
-//
-// Panda needs no wiring here — Vite loads the root postcss.config.mjs by itself,
-// and preview.tsx imports app/globals.css, which is the file holding the @layer
-// declaration the Panda PostCSS plugin expands.
 const config: StorybookConfig = {
   framework: "@storybook/nextjs-vite",
   // Their own folder, not colocated: components/ holds components only, and the

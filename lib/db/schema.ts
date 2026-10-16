@@ -1,6 +1,3 @@
-// Drizzle schema for the Neon (Postgres) datastore. Replaces the two legacy
-// Firestore collections (`articoliDinamici`, `pillole`) — see ADR 0009.
-// Italian field names are carried over from the app model in `app/content.ts`.
 import { pgTable, text, boolean, uuid } from "drizzle-orm/pg-core";
 
 // Articles. PK `id` is a DB-generated UUID. Articles are looked up by their

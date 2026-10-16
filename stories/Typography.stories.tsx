@@ -2,15 +2,6 @@ import preview from "../.storybook/preview";
 import { textStyles } from "@/theme/tokens.gen";
 import { css } from "@/styled-system/css";
 
-// Every named type style design.md declares, rendered at its real size with its
-// declared values beside it. Generated from theme/tokens.gen.ts by iteration, not
-// listed by hand: a hand-written list is a second source of truth that goes stale
-// the first time design.md gains a style (ADR 0004, ADR 0012).
-//
-// This is also why panda.config forces `textStyle: ["*"]` in staticCss — the name
-// here is a runtime value, and Panda only extracts literals. npm run check:tokens
-// fails if a declared style has no class, which is the guard that keeps this sheet
-// from silently rendering half of its rows in the inherited body font.
 
 type StyleName = keyof typeof textStyles;
 
@@ -92,9 +83,6 @@ const meta = preview.meta({
 
 export const Light = meta.story({});
 
-// The dark pass. The suite otherwise runs light only — check:contrast already
-// walks every declared token pair in both schemes — so these two Foundations
-// stories are where axe sees the dark scheme on real DOM. See ADR 0012.
 export const Dark = meta.story({
   globals: { theme: "dark" },
 });
