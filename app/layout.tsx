@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { fontVariables } from "./fonts";
+import { ArticleNavigationProvider } from "@/components/ArticleNavigation";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -34,11 +35,11 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var t=localStorage.getItem('theme');var d=t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.add(d?'dark':'light')}catch(e){}",
+              "var t;try{t=localStorage.getItem('theme')}catch(e){}var d=t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.add(d?'dark':'light')",
           }}
         />
       </head>
-      <body>{children}</body>
+      <body><ArticleNavigationProvider>{children}</ArticleNavigationProvider></body>
     </html>
   );
 }

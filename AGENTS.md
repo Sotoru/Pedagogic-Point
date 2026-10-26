@@ -1,6 +1,6 @@
 <!-- BEGIN:nextjs-agent-rules -->
 
-# This is NOT the Next.js you know
+## This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
 
@@ -21,8 +21,20 @@ Context7 MCP also indexes Panda CSS — prefer it for scoped lookups.
 
 # Guide
 
-- [docs/design.md](docs/design.md): token, tipografia e componenti; fonte dei token Panda
+- [docs/design.md](docs/design.md): fonte di verità per identità visiva, token Panda, componenti e interazioni; leggere prima di ogni modifica alla UI
 - [docs/git.md](docs/git.md): commit, tag di versione, deploy
+
+# Design
+
+- Ogni nuovo componente o interazione parte da [docs/design.md](docs/design.md):
+  riusare token, recipe e comportamenti esistenti.
+- Se manca una regola, definirla nel documento insieme all'implementazione;
+  documentare le eccezioni e il motivo, senza introdurre un secondo design system.
+- Non modificare i token generati: aggiornare il documento e usare `npm run tokens`.
+- Verificare le modifiche alla UI in Storybook, in chiaro e scuro, su mobile e
+  desktop, con tastiera e movimento ridotto; includere gli stati pertinenti.
+- `npm run lint` include il lint ufficiale Google del documento; per eseguirlo
+  separatamente usare `npm run lint:design`.
 
 # Commit
 

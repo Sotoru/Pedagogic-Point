@@ -11,16 +11,20 @@ export function UnsplashPicker({ onSelect }: { onSelect: (url: string) => void }
   const [photos, setPhotos] = useState<UnsplashPhoto[]>([]);
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [searched, setSearched] = useState(false);
 
-  const doSearch = () =>
+  const doSearch = () => {
+    if (pending) return;
     startTransition(async () => {
       setError(null);
+      setSearched(true);
       try {
         setPhotos(await searchUnsplash(query));
       } catch {
         setError("Ricerca Unsplash fallita. Controlla la chiave API.");
       }
     });
+  };
 
   const pick = (p: UnsplashPhoto) => {
     onSelect(p.url);
@@ -38,7 +42,7 @@ export function UnsplashPicker({ onSelect }: { onSelect: (url: string) => void }
           cursor: "pointer",
           borderRadius: "12px",
           border: "1px solid",
-          borderColor: "outline-variant",
+          borderColor: "outline",
           color: "primary",
           paddingInline: "4",
           textStyle: "button",
@@ -77,7 +81,7 @@ export function UnsplashPicker({ onSelect }: { onSelect: (url: string) => void }
             padding: { base: "5", md: "6" },
           })}
         >
-          <div className={css({ display: "flex", gap: "2", marginBottom: "4" })}>
+          <div className={css({ display: "flex", flexWrap: "wrap", gap: "2", marginBottom: "4" })}>
             <input
               // Focus must land inside a modal dialog when it opens, and autofocus
               // is how you say which control gets it. The blanket rule can't tell
@@ -90,10 +94,11 @@ export function UnsplashPicker({ onSelect }: { onSelect: (url: string) => void }
               onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), doSearch())}
               placeholder="Cerca su Unsplash…"
               className={css({
-                flex: "1",
+                flex: { base: "1 1 100%", md: "1 1 0%" },
+                minWidth: "0",
                 borderRadius: "12px",
                 border: "1px solid",
-                borderColor: "outline-variant",
+                borderColor: "outline",
                 backgroundColor: "surface",
                 color: "on-surface",
                 paddingInline: "4",
@@ -104,18 +109,20 @@ export function UnsplashPicker({ onSelect }: { onSelect: (url: string) => void }
             <button
               type="button"
               onClick={doSearch}
-              disabled={pending}
+              aria-disabled={pending}
+              aria-busy={pending}
               className={css({
                 cursor: "pointer",
                 borderRadius: "full",
                 backgroundColor: "primary",
                 color: "surface",
                 paddingInline: "6",
+                minHeight: "11",
                 textStyle: "button",
                 _disabled: { opacity: 0.5 },
               })}
             >
-              {pending ? "…" : "Cerca"}
+              {pending ? "Ricerca…" : "Cerca"}
             </button>
             {/* Was: dismiss only by clicking the overlay, which mouse users had to
                 guess at and keyboard users couldn't reach at all. */}
@@ -129,6 +136,7 @@ export function UnsplashPicker({ onSelect }: { onSelect: (url: string) => void }
                 borderColor: "outline-variant",
                 color: "muted",
                 paddingInline: "5",
+                minHeight: "11",
                 textStyle: "button",
               })}
             >
@@ -136,7 +144,11 @@ export function UnsplashPicker({ onSelect }: { onSelect: (url: string) => void }
             </button>
           </div>
 
-          {error && <p className={css({ color: "error", textStyle: "body-sm", marginBottom: "3" })}>{error}</p>}
+          {error && <p role="alert" className={css({ color: "error", textStyle: "body-md", marginBottom: "3" })}>{error}</p>}
+
+          <p role="status" className={css({ color: "muted", textStyle: "body-md", marginBottom: "3" })}>
+            {pending ? "Ricerca in corso…" : searched && !error ? `${photos.length} foto trovate.` : ""}
+          </p>
 
           <div
             className={css({
@@ -166,9 +178,9 @@ export function UnsplashPicker({ onSelect }: { onSelect: (url: string) => void }
               </button>
             ))}
           </div>
-          {photos.length === 0 && !pending && (
+          {photos.length === 0 && !pending && !error && (
             <p className={css({ color: "muted", textStyle: "body-sm", textAlign: "center", paddingBlock: "8" })}>
-              Cerca per vedere i risultati.
+              {searched ? "Nessuna foto trovata. Prova con un'altra ricerca." : "Cerca per vedere i risultati."}
             </p>
           )}
         </div>

@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import type { Article } from "@/app/content";
 import { loadMoreArticoli } from "@/app/actions";
 import { ArticleCard } from "./ArticleCard";
+import { useRememberedArticleList } from "./ArticleNavigation";
 import { Button } from "./Button";
 import { css } from "@/styled-system/css";
 import { articleGrid } from "@/styled-system/recipes";
@@ -23,8 +24,9 @@ export function ArticleList({
   featuredId: string | null;
   categoria: string | null;
 }) {
-  const [articoli, setArticoli] = useState(initialArticoli);
-  const [cursor, setCursor] = useState(initialCursor);
+  const [{ articoli, cursor, hasLoadedMore }, setList] = useRememberedArticleList({
+    articoli: initialArticoli, cursor: initialCursor, hasLoadedMore: false,
+  }, categoria);
   // Index in `articoli` where the latest appended page begins; null until the
   // first "Carica altri", so the server-rendered cards never animate.
   const [batchStart, setBatchStart] = useState<number | null>(null);
@@ -32,6 +34,7 @@ export function ArticleList({
   // Starts empty so mounting the live region announces nothing; it only speaks
   // once a click has actually appended cards.
   const [annuncio, setAnnuncio] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const s = articleGrid();
 
   const onLoadMore = () => {
@@ -39,11 +42,17 @@ export function ArticleList({
     // be clicked while pending — the guard is what makes the request idempotent.
     if (pending || !cursor) return;
     startTransition(async () => {
-      const page = await loadMoreArticoli(cursor, categoria);
-      setBatchStart(articoli.length);
-      setArticoli((prev) => [...prev, ...page.articoli]);
-      setCursor(page.nextCursor);
-      setAnnuncio(`${page.articoli.length} articoli caricati.`);
+      setError(null);
+      try {
+        const page = await loadMoreArticoli(cursor, categoria);
+        const added = page.articoli.filter((a) => a.id !== featuredId).length;
+        const total = [...articoli, ...page.articoli].filter((a) => a.id !== featuredId).length;
+        setBatchStart(articoli.length);
+        setList((prev) => ({ articoli: [...prev.articoli, ...page.articoli], cursor: page.nextCursor, hasLoadedMore: true }));
+        setAnnuncio(`${added} articoli caricati. ${total} in totale.`);
+      } catch {
+        setError("Non è stato possibile caricare gli articoli. Riprova con Carica altri.");
+      }
     });
   };
 
@@ -76,13 +85,14 @@ export function ArticleList({
       <span role="status" className={css({ srOnly: true })}>
         {annuncio}
       </span>
-      {cursor && (
+      {error && <p role="alert" className={css({ textStyle: "body-md", color: "error", marginTop: "4" })}>{error}</p>}
+      {(cursor || hasLoadedMore) && (
         <div className={s.footer}>
           {/* aria-disabled, not disabled: a disabled button drops out of the tab
               order mid-interaction, so the focus you were holding lands on <body>
               and you lose your place in the list. */}
-          <Button type="button" onClick={onLoadMore} aria-disabled={pending}>
-            {pending ? "Caricamento…" : "Carica altri"}
+          <Button type="button" onClick={onLoadMore} aria-disabled={pending || !cursor} aria-busy={pending}>
+            {pending ? "Caricamento…" : cursor ? "Carica altri" : "Tutti gli articoli sono caricati"}
           </Button>
         </div>
       )}

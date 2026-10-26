@@ -36,7 +36,6 @@ export default defineConfig({
       },
       keyframes: {
         spin: { to: { transform: "rotate(360deg)" } },
-        fadeIn: { from: { opacity: 0 } },
         fadeUp: { from: { opacity: 0, transform: "translateY(8px)" } },
       },
       semanticTokens,
@@ -63,7 +62,17 @@ export default defineConfig({
     // Press-scale stays (tiny, non-vestibular); spins, fades and the theme
     // cross-fade go. ThemeToggle also skips startViewTransition on its own.
     // Cover morph between card/hero and article page (see CoverTransition).
-    "::view-transition-group(.morph)": { animationDuration: "400ms" },
+    "::view-transition-group(.morph)": { animationDuration: "400ms", overflow: "clip" },
+    // Card (16/10), hero (4/3), and article (2/1 on desktop) have different
+    // crops. UA snapshots default to height:auto + overflow:visible: the old
+    // photo then spills below the moving box and flashes as it fades away.
+    "::view-transition-old(.morph), ::view-transition-new(.morph)": {
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      objectPosition: "center",
+      overflow: "clip",
+    },
     "@media (prefers-reduced-motion: reduce)": {
       "*, *::before, *::after": { animation: "none !important" },
       "::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*)": {

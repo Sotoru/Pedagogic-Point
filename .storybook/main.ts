@@ -12,6 +12,18 @@ const config: StorybookConfig = {
   // Cover images resolve to public/ instead of Unsplash, so the suite doesn't
   // depend on the network for pixels.
   staticDirs: ["../public"],
+  // The editor is loaded dynamically in the app. Prebundle it here so adding
+  // its stories cannot trigger a Vite reload in the middle of the browser suite.
+  viteFinal: (config) => ({
+    ...config,
+    optimizeDeps: {
+      ...config.optimizeDeps,
+      include: [
+        ...(config.optimizeDeps?.include ?? []),
+        "@mdxeditor/editor", "@mdxeditor/gurx", "@lexical/rich-text", "lexical", "react-dom",
+      ],
+    },
+  }),
 };
 
 export default config;

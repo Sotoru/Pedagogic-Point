@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { ArticleLink } from "./ArticleNavigation";
 import type { Article } from "@/app/content";
 import { letturaTime } from "@/app/content";
 import { CategoryTag } from "./CategoryTag";
@@ -39,12 +39,12 @@ export function Hero({ articolo }: { articolo: Article }) {
         <div className={css({ textAlign: { base: "center", md: "left" }, gridColumn: { md: "span 5" } })}>
           <h1 className={css({ textStyle: { base: "display-lg-mobile", md: "display-lg" }, color: "primary" })}>
             {/* Stretched link: whole hero is the target, title is the link text. */}
-            <Link
+            <ArticleLink
               href={`/articoli/${articolo.slug}`}
               className={css({ _after: { content: '""', position: "absolute", inset: "0" } })}
             >
               {articolo.titolo}
-            </Link>
+            </ArticleLink>
           </h1>
           <p className={css({ textStyle: "body-lg", marginTop: "4", lineClamp: "4", color: "on-surface" })}>
             {articolo.introduzione}
@@ -59,6 +59,7 @@ export function Hero({ articolo }: { articolo: Article }) {
         <div className={css({ gridColumn: { md: "span 7" } })}>
           <CoverTransition slug={articolo.slug}>
             <div
+              data-article-cover={articolo.slug}
               className={css({
                 position: "relative",
                 aspectRatio: "4/3",

@@ -70,8 +70,10 @@ export async function getArticoli(cursor?: string, categoria?: string | null): P
     const nextCursor = articoli.length === PAGE_SIZE ? articoli[articoli.length - 1].id : null;
     return { articoli, nextCursor };
   } catch (e) {
-    // Degrade to an empty page instead of a 500 on a DB/config hiccup.
     console.error("getArticoli failed:", e);
+    // The initial page can degrade gracefully. A failed continuation must reach
+    // the client retry state, otherwise it masquerades as the end of the list.
+    if (cursor) throw e;
     return { articoli: [], nextCursor: null };
   }
 }

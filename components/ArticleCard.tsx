@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { ArticleLink } from "./ArticleNavigation";
 import type { Article } from "@/app/content";
 import { excerpt, letturaTime } from "@/app/content";
 import { CategoryTag } from "./CategoryTag";
@@ -23,7 +23,7 @@ export function ArticleCard({ articolo, enterDelay }: { articolo: Article; enter
       style={enterDelay ? { animationDelay: `${enterDelay}ms` } : undefined}
     >
       <CoverTransition slug={articolo.slug}>
-        <div className={s.media}>
+        <div className={s.media} data-article-cover={articolo.slug}>
           <Image
             src={articolo.copertina}
             alt={articolo.titolo}
@@ -37,12 +37,12 @@ export function ArticleCard({ articolo, enterDelay }: { articolo: Article; enter
         <CategoryTag categoria={articolo.categoria} />
         <h3 className={s.title}>
           {/* Stretched link: whole card is the target, title is the link text. */}
-          <Link
+          <ArticleLink
             href={`/articoli/${articolo.slug}`}
             className={css({ _after: { content: '""', position: "absolute", inset: "0" } })}
           >
             {articolo.titolo}
-          </Link>
+          </ArticleLink>
         </h3>
         <p className={s.excerpt}>{excerpt(articolo)}</p>
         <div className={s.meta}>

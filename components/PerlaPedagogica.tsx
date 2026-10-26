@@ -6,6 +6,7 @@ import { refreshPerla } from "@/app/actions";
 import { RefreshIcon } from "./icons";
 import { css } from "@/styled-system/css";
 import { categoryTag } from "@/styled-system/recipes";
+import { usePerlaMotion } from "./usePerlaMotion";
 
 // Perla elevation. Light rests on the design.md shadow tokens; dark retunes them
 // (deeper shadows, a card fill lighter than the band so it still lifts) — these
@@ -22,6 +23,8 @@ const chipShadow = { base: "card-subtle", _dark: "0 1px 2px rgba(0,0,0,0.5)" } a
 export function PerlaPedagogica({ initialPerla }: { initialPerla: Perla | null }) {
   const [perla, setPerla] = useState(initialPerla);
   const [pending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  const { cardRef, quoteRef, prepareChange } = usePerlaMotion(perla?.contenuto);
 
   if (!perla) return null;
 
@@ -30,8 +33,18 @@ export function PerlaPedagogica({ initialPerla }: { initialPerla: Perla | null }
     // `disabled` used to prevent.
     if (pending) return;
     startTransition(async () => {
-      const next = await refreshPerla();
-      if (next) setPerla(next);
+      setError(null);
+      try {
+        const next = await refreshPerla();
+        if (!next) throw new Error("No quote returned");
+        if (next.contenuto !== perla.contenuto && await prepareChange()) {
+          // Updates after an awaited animation need their own transition. Clear
+          // any retry error in the same commit as the new live-region text.
+          startTransition(() => { setError(null); setPerla(next); });
+        }
+      } catch {
+        setError("La nuova perla non è arrivata. Riprova con il pulsante di aggiornamento.");
+      }
     });
   };
 
@@ -45,6 +58,7 @@ export function PerlaPedagogica({ initialPerla }: { initialPerla: Perla | null }
         })}
       >
         <div
+          ref={cardRef}
           className={css({
             position: "relative",
             marginInline: "auto",
@@ -54,12 +68,14 @@ export function PerlaPedagogica({ initialPerla }: { initialPerla: Perla | null }
             padding: { base: "8", md: "49px" },
             textAlign: "center",
             boxShadow: restShadow,
+            overflow: "clip",
           })}
         >
           <button
             type="button"
             onClick={onRefresh}
             aria-disabled={pending}
+            aria-busy={pending}
             aria-label="Mostra un'altra perla"
             className={css({
               position: "absolute",
@@ -69,6 +85,11 @@ export function PerlaPedagogica({ initialPerla }: { initialPerla: Perla | null }
               borderRadius: "full",
               backgroundColor: cardFill,
               padding: "2",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              minWidth: "11",
+              minHeight: "11",
               color: "primary",
               boxShadow: chipShadow,
               transitionProperty: "box-shadow, transform",
@@ -93,13 +114,13 @@ export function PerlaPedagogica({ initialPerla }: { initialPerla: Perla | null }
           {/* role="status" (= polite + atomic) so the refresh button reads out the
               new perla instead of swapping it in silently. The region ships with
               its content already in place, so mounting announces nothing. */}
-          <p role="status" className={css({ textStyle: "quote", marginTop: "4", color: "primary" })}>
-            {/* key remounts only this span, so the new quote fades in while the
-                live region itself stays mounted and keeps announcing. */}
-            <span key={perla.contenuto} className={css({ animation: "fadeIn 200ms ease-out" })}>
-              &ldquo;{perla.contenuto}&rdquo;
-            </span>
+          <p ref={quoteRef} role="status" className={css({ textStyle: "quote", marginTop: "4", color: "primary" })}>
+            &ldquo;{perla.contenuto}&rdquo;
           </p>
+          <p role="status" aria-label="Aggiornamento perla" className={css({ srOnly: true })}>
+            {pending ? "Caricamento…" : ""}
+          </p>
+          {error && <p role="alert" className={css({ textStyle: "body-md", color: "error", marginTop: "2" })}>{error}</p>}
         </div>
       </div>
     </section>

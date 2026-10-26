@@ -1,11 +1,11 @@
 // Bind design.md → Panda. Reads a DTCG export on stdin (colors/typography/
 // spacing/rounded) and the design.md path on argv[2] for the bits DTCG v0.3
-// drops: the `shadows:` block and per-typography `fontStyle`/`textAlign`.
+// drops: the `shadows:` block and `x-panda.textStyles` extensions.
 // Emits a TS module of Panda tokens/semanticTokens/textStyles. design.md stays
 // the single source of truth; this file is generated, never hand-edited.
 //
-//   design.md export docs/design.md --format dtcg | node scripts/dtcg-to-panda.mjs docs/design.md > theme/tokens.gen.ts
-import { readFileSync } from "node:fs";
+//   design.md export docs/design.md --format dtcg | node scripts/dtcg-to-panda.mjs docs/design.md theme/tokens.gen.ts
+import { existsSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { parse as parseYaml } from "yaml";
 
 // next/font vars aren't in design.md (app-specific); design.md only names the
@@ -83,7 +83,7 @@ for (const name of keys(dtcg.typography)) {
   if (v.lineHeight != null) style.lineHeight = px ? String(+(v.lineHeight / px).toFixed(4)) : `${v.lineHeight}px`;
   if (v.letterSpacing) style.letterSpacing = dim(v.letterSpacing);
   // frontmatter-only props
-  const fmType = front.typography?.[name] ?? {};
+  const fmType = front["x-panda"]?.textStyles?.[name] ?? {};
   if (fmType.fontStyle) style.fontStyle = fmType.fontStyle;
   if (fmType.textAlign) style.textAlign = fmType.textAlign;
   textStyles[name] = { value: style };
@@ -91,10 +91,21 @@ for (const name of keys(dtcg.typography)) {
 
 const banner = "// AUTO-GENERATED from docs/design.md by scripts/dtcg-to-panda.mjs. Do not edit.\n";
 const j = (o) => JSON.stringify(o, null, 2);
-process.stdout.write(
+const output =
   banner +
     `export const tokens = ${j({ spacing, sizes: spacing, radii, shadows })};\n\n` +
     `export const semanticTokens = ${j({ colors: semColors })};\n\n` +
     `export const colorAliases = ${j(colorAliases)};\n\n` +
-    `export const textStyles = ${j(textStyles)};\n`,
-);
+    `export const textStyles = ${j(textStyles)};\n`;
+const outputPath = process.argv[3];
+if (!outputPath) process.stdout.write(output);
+else if (!existsSync(outputPath) || readFileSync(outputPath, "utf8") !== output) {
+  // Shell redirection truncates the destination before the exporter runs.
+  // A running dev server can read that empty module and cache missing exports.
+  // Replace a complete file atomically; leave unchanged tokens untouched.
+  const temporaryPath = `${outputPath}.${process.pid}.tmp`;
+  try {
+    writeFileSync(temporaryPath, output);
+    renameSync(temporaryPath, outputPath);
+  } finally { rmSync(temporaryPath, { force: true }); }
+}

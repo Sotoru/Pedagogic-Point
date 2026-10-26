@@ -6,9 +6,8 @@ import { ViewTransition } from "react";
 // slug makes the browser morph one into the other on navigation.
 // default="none" stops it cross-fading on unrelated transitions; the explicit
 // share is what keeps the pair morphing despite that (Next view-transitions guide).
-// The morph needs the destination in the client cache at click time, so it plays
-// card → article (links prefetch once in the viewport) but not on the way back:
-// the home reads ?categoria, is dynamic, and is never fully prefetched.
+// Forward navigation pairs cached destinations here. useCoverReturn bridges
+// eager history traversal with the same native morph after scroll restoration.
 export function CoverTransition({ slug, children }: { slug: string; children: ReactNode }) {
   return (
     <ViewTransition name={`cover-${slug}`} share="morph" default="none">

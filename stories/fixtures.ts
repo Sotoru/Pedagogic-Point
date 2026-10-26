@@ -104,3 +104,11 @@ export const perlaAlternativa: Perla = {
   contenuto:
     "Educare non è riempire un secchio, è accendere un fuoco: e il fuoco, a differenza dell'acqua, prende la forma di chi lo riceve.",
 };
+
+export const perlaBreve: Perla = {
+  contenuto: "Educare è dare spazio alla curiosità.",
+};
+
+export const perlaLunga: Perla = {
+  contenuto: "Ogni bambino porta con sé un modo unico di guardare il mondo. Educare significa concedergli il tempo di fare domande, provare, sbagliare e ricominciare, accompagnandolo senza sostituirsi a lui. A volte basta fermarsi ad ascoltare: dietro un gesto o una parola inattesa può esserci una scoperta che aspetta di essere condivisa. La fiducia cresce nei piccoli incontri quotidiani, quando l'adulto riconosce il valore di un tentativo e lascia spazio a una strada diversa dalla propria.",
+};

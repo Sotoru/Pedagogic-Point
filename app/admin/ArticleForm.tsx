@@ -20,7 +20,7 @@ const field = css({
   width: "100%",
   borderRadius: "12px",
   border: "1px solid",
-  borderColor: "outline-variant",
+  borderColor: "outline",
   backgroundColor: "surface",
   color: "on-surface",
   paddingInline: "4",
@@ -125,7 +125,7 @@ export function ArticleForm({
           className={css({
             borderRadius: "12px",
             border: "1px solid",
-            borderColor: "outline-variant",
+            borderColor: "outline",
             overflow: "hidden",
             backgroundColor: "surface",
           })}

@@ -59,10 +59,13 @@ const PAIRS: Array<[fg: string, bg: string, min: number, note: string]> = [
   ["on-primary", "primary", 4.5, "button label on hover fill"],
   ["primary", "background", 3.0, "focus ring against the page"],
   ["primary", "surface-container", 3.0, "focus ring against the tinted band"],
+  ["outline", "surface", 3.0, "form control boundary"],
 ];
 
 const failures: string[] = [];
+let checks = 0;
 const check = (got: number, min: number, label: string) => {
+  checks++;
   const ok = got >= min;
   if (!ok) failures.push(`${got.toFixed(2)} < ${min.toFixed(1)}  ${label}`);
   return ok;
@@ -73,6 +76,10 @@ for (const scheme of ["base", "_dark"] as Scheme[]) {
 
   for (const [fg, bg, min, note] of PAIRS) {
     check(ratio(hex(fg, scheme), hex(bg, scheme)), min, `${theme}: ${fg} on ${bg} (${note})`);
+  }
+
+  for (const fg of ["primary", "on-surface", "error"]) {
+    check(ratio(hex(fg, scheme), CARD_FILL[scheme]), 4.5, `${theme}: ${fg} on the perla card`);
   }
 
   // Tags: accent ink at its TAG_INK strength, on a 10% tint of the same accent
@@ -96,4 +103,4 @@ if (failures.length) {
   console.error(`✗ ${failures.length} contrast failure(s):\n  ` + failures.join("\n  "));
   process.exit(1);
 }
-console.log(`contrast ok (${(PAIRS.length + Object.keys(TAG_INK).length * 3) * 2} pairs, light + dark)`);
+console.log(`contrast ok (${checks} pairs, light + dark)`);

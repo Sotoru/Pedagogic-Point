@@ -24,16 +24,24 @@ export function ThemeToggle() {
   // Browsers without View Transitions, and reduced motion, just swap.
   const toggle = () => {
     if (!document.startViewTransition || matchMedia("(prefers-reduced-motion: reduce)").matches) apply();
-    else document.startViewTransition(apply);
+    else {
+      // Rapid toggles can skip an unfinished transition. The theme still
+      // changes; only its animation's `ready` promise rejects.
+      void document.startViewTransition(apply).ready.catch(() => {});
+    }
   };
 
   return (
     <button
       type="button"
       onClick={toggle}
-      aria-label="Cambia tema chiaro/scuro"
       className={css({
         cursor: "pointer",
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        minWidth: "11",
+        minHeight: "11",
         borderRadius: "full",
         padding: "2",
         color: "on-surface-variant",
@@ -44,6 +52,12 @@ export function ThemeToggle() {
         _active: { transform: "scale(0.9)" },
       })}
     >
+      <span className={css({ display: { base: "inline", _dark: "none" } })}>
+        <span className={css({ srOnly: true })}>Attiva tema scuro</span>
+      </span>
+      <span className={css({ display: { base: "none", _dark: "inline" } })}>
+        <span className={css({ srOnly: true })}>Attiva tema chiaro</span>
+      </span>
       <SunIcon className={css({ display: { base: "block", _dark: "none" } })} />
       <MoonIcon className={css({ display: { base: "none", _dark: "block" } })} />
     </button>

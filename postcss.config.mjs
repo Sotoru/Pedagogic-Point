@@ -1,1 +1,3 @@
-export default { plugins: { '@pandacss/dev/postcss': {} } };
+const config = { plugins: { '@pandacss/dev/postcss': {} } };
+
+export default config;

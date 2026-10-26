@@ -1,4 +1,4 @@
-import { expect } from "storybook/test";
+import { expect, mocked } from "storybook/test";
 import preview from "../.storybook/preview";
 import { loadMoreArticoli } from "@/app/actions";
 import { ArticleList } from "@/components/ArticleList";
@@ -43,10 +43,28 @@ export const CaricaAltri = meta.story({
     // The appended page arrived…
     await expect(await canvas.findByText("Cercando la felicità")).toBeInTheDocument();
     // …and said so out loud, which is the part a crawl cannot see (WCAG 4.1.3).
-    await expect(canvas.getByRole("status")).toHaveTextContent("2 articoli caricati.");
-    // nextCursor was null, so the button retires instead of promising a page that
-    // does not exist.
-    await expect(canvas.queryByRole("button", { name: "Carica altri" })).toBeNull();
+    await expect(canvas.getByRole("status")).toHaveTextContent("2 articoli caricati. 4 in totale.");
+    // Keep the same focusable node on the final page: removing it loses focus.
+    const complete = canvas.getByRole("button", { name: "Tutti gli articoli sono caricati" });
+    await expect(complete).toHaveAttribute("aria-disabled", "true");
+    await expect(complete).toHaveFocus();
+    const calls = mocked(loadMoreArticoli).mock.calls.length;
+    await userEvent.keyboard("{Enter}");
+    await expect(loadMoreArticoli).toHaveBeenCalledTimes(calls);
+  },
+});
+
+export const ErroreERiprova = meta.story({
+  play: async ({ canvas, userEvent }) => {
+    mocked(loadMoreArticoli).mockRejectedValueOnce(new Error("Network unavailable"));
+    const button = await canvas.findByRole("button", { name: "Carica altri" });
+    await userEvent.click(button);
+    await expect(await canvas.findByRole("alert")).toHaveTextContent("Riprova con Carica altri");
+    await expect(button).toHaveFocus();
+    await expect(canvas.getByText(articoli[1].titolo)).toBeInTheDocument();
+    await userEvent.keyboard("{Enter}");
+    await expect(await canvas.findByText("Cercando la felicità")).toBeInTheDocument();
+    await expect(canvas.queryByRole("alert")).toBeNull();
   },
 });
 

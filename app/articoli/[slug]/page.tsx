@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { BackToArticles } from "@/components/ArticleNavigation";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getArticoloBySlug } from "@/lib/data";
@@ -60,6 +60,7 @@ export default async function ArticoloPage({
         >
           <CoverTransition slug={articolo.slug}>
             <div
+              data-article-cover={articolo.slug}
               className={css({
                 position: "relative",
                 aspectRatio: { base: "4/3", md: "2/1" },
@@ -93,23 +94,7 @@ export default async function ArticoloPage({
             paddingBlock: { base: "12", md: "16" },
           })}
         >
-          <Link
-            href="/"
-            className={css({
-              textStyle: "button",
-              marginBottom: "8",
-              display: "flex",
-              width: "fit-content",
-              alignItems: "center",
-              gap: "1.5",
-              color: "muted",
-              transitionProperty: "color",
-              transitionDuration: "150ms",
-              _hover: { color: "primary" },
-            })}
-          >
-            <span aria-hidden>&larr;</span> Torna agli articoli
-          </Link>
+          <BackToArticles />
           <CategoryTag categoria={articolo.categoria} />
           <h1 className={css({ textStyle: "headline-md", marginTop: "4", color: "primary" })}>{articolo.titolo}</h1>
           <div
