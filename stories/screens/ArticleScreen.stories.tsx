@@ -6,7 +6,7 @@ const meta = preview.meta({
   title: "Schermate/Articolo",
   component: ArticleScreen,
   parameters: { layout: "fullscreen" },
-  args: { articolo: articoli[1] },
+  args: { articolo: articoli[2] },
 });
 
 export const Default = meta.story({ name: "Articolo" });
