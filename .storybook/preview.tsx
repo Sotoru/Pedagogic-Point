@@ -62,6 +62,7 @@ export default definePreview({
         order: [
           "Panoramica",
           "Esplora",
+          "Schermate",
           "Componenti",
           ["Articoli", "Perla pedagogica", "Navigazione", "Amministrazione"],
           "UI",

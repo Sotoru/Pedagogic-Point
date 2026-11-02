@@ -11,6 +11,7 @@ La navigazione segue l'uso dell'interfaccia:
 | Sezione    | Contenuto                                                                   |
 | ---------- | --------------------------------------------------------------------------- |
 | Esplora    | Galleria visiva e confronto affiancato degli scenari                        |
+| Schermate  | Pagine intere del sito (Home, Articolo) composte con le fixture             |
 | Componenti | Parti del sito per area: Articoli, Perla pedagogica, Navigazione, Amministrazione |
 | UI         | Controlli e primitive riutilizzabili                                        |
 | Fondamenti | Colori, tipografia, icone e marchio generati da `docs/design.md`            |

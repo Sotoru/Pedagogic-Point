@@ -1,12 +1,6 @@
 import { getArticoli, getFeatured, getRandomPerla } from "@/lib/data";
 import { resolveCategoria } from "@/app/content";
-import { Nav } from "@/components/Nav";
-import { Hero } from "@/components/Hero";
-import { PerlaPedagogica } from "@/components/PerlaPedagogica";
-import { Dropdown } from "@/components/Dropdown";
-import { ArticleList } from "@/components/ArticleList";
-import { Footer } from "@/components/Footer";
-import { articleGrid } from "@/styled-system/recipes";
+import { HomeScreen } from "@/components/HomeScreen";
 
 // ISR: statically rendered, regenerated at most every 5 minutes.
 export const revalidate = 300;
@@ -23,34 +17,13 @@ export default async function Home({
     getArticoli(undefined, categoria),
     getRandomPerla(),
   ]);
-  const grid = articleGrid();
-
   return (
-    <>
-      <Nav />
-      <main>
-        {featured && <Hero articolo={featured} />}
-        <PerlaPedagogica initialPerla={perla} />
-        {/* Grid shell (server): styling from the articleGrid recipe; the list +
-            "Carica altri" interactivity live in the ArticleList client component. */}
-        <section className={grid.root}>
-          <div className={grid.filter}>
-            <span className={grid.filterLabel}>Filtra per:</span>
-            <Dropdown categoria={categoria} />
-          </div>
-          <h2 className={grid.heading}>Ultimi articoli</h2>
-          {/* key remounts the list on filter change so its state resets to the
-              new first page (a soft nav would otherwise keep it mounted). */}
-          <ArticleList
-            key={categoria ?? "all"}
-            categoria={categoria}
-            initialArticoli={firstPage.articoli}
-            initialCursor={firstPage.nextCursor}
-            featuredId={featured?.id ?? null}
-          />
-        </section>
-      </main>
-      <Footer />
-    </>
+    <HomeScreen
+      featured={featured}
+      articoli={firstPage.articoli}
+      nextCursor={firstPage.nextCursor}
+      perla={perla}
+      categoria={categoria}
+    />
   );
 }
