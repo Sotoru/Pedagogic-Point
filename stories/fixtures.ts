@@ -17,10 +17,10 @@ export const categoriaFiltroArgType = {
   mapping: { [TUTTE_LE_CATEGORIE]: null },
 };
 
-const COVER = "/placeholder-cover.svg";
+// The articles' real Unsplash covers, saved in public/fixtures so the suite stays offline.
+const cover = (slug: string) => `/fixtures/${slug}.jpg`;
 
 const base = {
-  copertina: COVER,
   evidenza: false,
   autore: "Antonella Valletta",
 } as const;
@@ -29,6 +29,7 @@ export const articoloInEvidenza: Article = {
   ...base,
   id: "00000000-0000-4000-8000-000000000001",
   slug: "il-linguaggio-umano",
+  copertina: cover("il-linguaggio-umano"),
   titolo: "Il linguaggio umano",
   introduzione:
     "Il linguaggio è una caratteristica dell'essere umano e implica la capacità di fondere i suoni e i significati mediante regole grammaticali. Le discipline dedite al linguaggio sono la fonetica, la fonologia e la morfologia.",
@@ -43,6 +44,7 @@ export const articoli: Article[] = [
     ...base,
     id: "00000000-0000-4000-8000-000000000002",
     slug: "la-pedagogia-nera",
+  copertina: cover("la-pedagogia-nera"),
     titolo: "La pedagogia nera",
     introduzione:
       "Katharina Rutschky ha coniato l'espressione «Schwarze Pädagogik» per indicare una pedagogia che pone la violenza fisica e psichica al centro dell'educazione.",
@@ -53,6 +55,7 @@ export const articoli: Article[] = [
     ...base,
     id: "00000000-0000-4000-8000-000000000003",
     slug: "l-assertivita",
+  copertina: cover("l-assertivita"),
     titolo: "L'assertività",
     introduzione:
       "Il termine assertività indica l'area intermedia nella successione aggressività-passività, dove la propria posizione si afferma senza cancellare quella dell'altro.",
@@ -67,6 +70,7 @@ export const articoloSenzaIntroduzione: Article = {
   ...base,
   id: "00000000-0000-4000-8000-000000000004",
   slug: "acting-out",
+  copertina: cover("acting-out"),
   titolo: "Acting out",
   introduzione: "",
   categoria: "curiosità",
@@ -82,6 +86,7 @@ export const paginaSuccessiva: ArticlePage = {
       ...base,
       id: "00000000-0000-4000-8000-000000000005",
       slug: "cercando-la-felicita",
+  copertina: cover("cercando-la-felicita"),
       titolo: "Cercando la felicità",
       introduzione:
         "Nel tempo si sono affermate correnti di pensiero filosofico differenti su cosa sia la felicità, e quasi nessuna la tratta come uno stato stabile.",
