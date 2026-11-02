@@ -77,12 +77,8 @@ function TypographySheet() {
 }
 
 const meta = preview.meta({
-  title: "Foundations/Typography",
+  title: "Fondamenti/Tipografia",
   component: TypographySheet,
 });
 
-export const Light = meta.story({});
-
-export const Dark = meta.story({
-  globals: { theme: "dark" },
-});
+export const Light = meta.story({ name: "Tipografia" });

@@ -25,7 +25,8 @@
     "check:transitions": "node scripts/check-cover-transition.mjs",
     "check:history": "node scripts/check-article-history.mjs",
     "check:a11y": "node --env-file=.env.local scripts/check-a11y.mjs",
-    "check:stories": "vitest run --project=storybook"
+    "check:stories": "vitest run --project=storybook",
+    "check:catalog": "node --experimental-strip-types scripts/check-catalog.mts"
   },
   "dependencies": {
     "@google/design.md": "^0.4.0",

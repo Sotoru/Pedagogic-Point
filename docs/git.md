@@ -2,7 +2,8 @@
 
 - Ogni commit usa Conventional Commits (`feat`, `fix`, `perf`, `refactor`,
   `style`, `build`, `chore`, `docs`, `test`), anche su `develop`.
-- Vercel pubblica la produzione da `main`.
+- Vercel pubblica la produzione da `main` (sito e Storybook); `develop` produce
+  solo una Preview.
 - Si rilascia in fast-forward: verifica obbligatoria verde, poi
   `git push origin develop:main`.
 - Si tagga solo `main`. Dopo il push, calcolare il bump dai commit

@@ -6,7 +6,7 @@ import { TUTTE_LE_CATEGORIE, articoli, categoriaFiltroArgType } from "./fixtures
 import { articleGrid } from "@/styled-system/recipes";
 
 const meta = preview.meta({
-  title: "Components/ArticleList",
+  title: "Componenti/Articoli/Elenco articoli",
   component: ArticleList,
   argTypes: { categoria: categoriaFiltroArgType },
   args: {
@@ -29,7 +29,7 @@ const meta = preview.meta({
   ],
 });
 
-export const Default = meta.story({});
+export const Default = meta.story({ name: "Predefinito" });
 
 export const CaricaAltri = meta.story({
   play: async ({ canvas, userEvent }) => {

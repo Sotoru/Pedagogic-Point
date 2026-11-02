@@ -141,12 +141,8 @@ function ColorSheet() {
 }
 
 const meta = preview.meta({
-  title: "Foundations/Colors",
+  title: "Fondamenti/Colori",
   component: ColorSheet,
 });
 
-export const Light = meta.story({});
-
-export const Dark = meta.story({
-  globals: { theme: "dark" },
-});
+export const Light = meta.story({ name: "Colori" });

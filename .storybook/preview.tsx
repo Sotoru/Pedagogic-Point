@@ -12,6 +12,12 @@ import { WCAG_TAGS } from "../scripts/a11y-tags.mjs";
 // perla-refresh interactions have something to append.
 sb.mock(import("../app/actions.ts"));
 
+const THEMES = [
+  { value: "system", title: "Sistema" },
+  { value: "light", title: "Chiaro" },
+  { value: "dark", title: "Scuro" },
+];
+
 export default definePreview({
   // Not decoration: this is what types the preview. `definePreview` infers the
   // parameter and globals shape from the addons array, and with the array absent
@@ -20,11 +26,13 @@ export default definePreview({
   addons: [a11y()],
   globalTypes: {
     theme: {
-      description: "design.md colour scheme",
-      toolbar: { title: "Theme", icon: "circlehollow", items: ["light", "dark"], dynamicTitle: true },
+      description: "Tema della vetrina",
+      toolbar: { title: "Tema", icon: "contrast", items: THEMES, dynamicTitle: true },
     },
   },
-  initialGlobals: { theme: "light" },
+  // `system` follows prefers-color-scheme, which is what lets the Vitest suite
+  // run every story once per scheme without a dark copy of each story.
+  initialGlobals: { theme: "system" },
   decorators: [
     (Story, { globals }) => {
       // Both the scheme class and the font vars go on <html>, where the app's
@@ -33,9 +41,14 @@ export default definePreview({
       // that element — a wrapper div would leave the page surface unthemed and
       // the base font falling back to system-ui.
       const root = document.documentElement;
+      const dark =
+        globals.theme === "dark" ||
+        (globals.theme !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
       root.classList.remove("light", "dark");
-      root.classList.add(globals.theme === "dark" ? "dark" : "light");
+      root.classList.add(dark ? "dark" : "light");
       root.classList.add(...fontVariables);
+      // Gallery thumbnails are pictures, not controls.
+      root.inert = window.frameElement?.hasAttribute("data-story-thumbnail") ?? false;
       return <Story />;
     },
   ],
@@ -44,8 +57,23 @@ export default definePreview({
     // wanted everywhere rather than per story — Dropdown's useRouter would
     // throw otherwise.
     nextjs: { appDirectory: true },
+    options: {
+      storySort: {
+        order: [
+          "Panoramica",
+          "Esplora",
+          "Componenti",
+          ["Articoli", "Perla pedagogica", "Navigazione", "Amministrazione"],
+          "UI",
+          "Fondamenti",
+        ],
+        method: "alphabetical",
+      },
+    },
     a11y: {
-      options: { runOnly: WCAG_TAGS },
+      // Violations keep every node; passes keep one example, so the test panel
+      // and the MCP don't carry hundreds of positive copies.
+      options: { runOnly: WCAG_TAGS, resultTypes: ["violations", "incomplete"] },
       // Violations fail `npm run check:stories`, not just the addon panel.
       test: "error",
     },

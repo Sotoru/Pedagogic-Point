@@ -3,7 +3,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { expect } from "storybook/test";
 
 const meta = preview.meta({
-  title: "Components/ThemeToggle",
+  title: "UI/Selettore tema",
   component: ThemeToggle,
 });
 
@@ -14,12 +14,16 @@ const meta = preview.meta({
 // precisely to own that class, and faking it would test the fake.
 //
 export const Default = meta.story({
+  name: "Selettore tema",
   play: async ({ canvas, userEvent }) => {
-    const button = canvas.getByRole("button", { name: "Attiva tema scuro" });
-    button.focus();
+    // The suite runs in both schemes, so the starting label depends on which.
+    const [first, second] = document.documentElement.classList.contains("dark")
+      ? ["Attiva tema chiaro", "Attiva tema scuro"]
+      : ["Attiva tema scuro", "Attiva tema chiaro"];
+    canvas.getByRole("button", { name: first }).focus();
     await userEvent.keyboard("{Enter}");
-    await expect(await canvas.findByRole("button", { name: "Attiva tema chiaro" })).toHaveFocus();
+    await expect(await canvas.findByRole("button", { name: second })).toHaveFocus();
     await userEvent.keyboard("{Enter}");
-    await expect(await canvas.findByRole("button", { name: "Attiva tema scuro" })).toHaveFocus();
+    await expect(await canvas.findByRole("button", { name: first })).toHaveFocus();
   },
 });

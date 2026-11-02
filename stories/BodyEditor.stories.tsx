@@ -3,28 +3,18 @@ import preview from "../.storybook/preview";
 import { BodyEditor } from "@/app/admin/BodyEditor";
 
 const meta = preview.meta({
-  title: "Admin/BodyEditor",
+  title: "Componenti/Amministrazione/Editor del testo",
   component: BodyEditor,
   args: { markdown: "", onChange: fn() },
 });
 
 export const Chiaro = meta.story({
+  name: "Scrittura",
   play: async ({ canvas, userEvent, args }) => {
     const editor = canvas.getByRole("textbox", { name: "editable markdown" });
     await userEvent.click(editor);
     await userEvent.type(editor, "Un testo leggibile mentre scriviamo.");
     await expect(editor).toHaveTextContent("Un testo leggibile mentre scriviamo.");
-    await expect(args.onChange).toHaveBeenCalled();
-  },
-});
-
-export const Scuro = meta.story({
-  globals: { theme: "dark" },
-  play: async ({ canvas, userEvent, args }) => {
-    const editor = canvas.getByRole("textbox", { name: "editable markdown" });
-    await userEvent.click(editor);
-    await userEvent.type(editor, "Un testo leggibile anche al buio.");
-    await expect(editor).toHaveTextContent("Un testo leggibile anche al buio.");
     await expect(args.onChange).toHaveBeenCalled();
   },
 });
@@ -42,7 +32,6 @@ export const Titoli = meta.story({
 });
 
 export const Collegamento = meta.story({
-  globals: { theme: "dark" },
   play: async ({ canvas, userEvent, args }) => {
     const editor = canvas.getByRole("textbox", { name: "editable markdown" });
     await userEvent.click(editor);

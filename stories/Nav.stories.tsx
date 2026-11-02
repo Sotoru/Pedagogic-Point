@@ -2,8 +2,8 @@ import preview from "../.storybook/preview";
 import { Nav } from "@/components/Nav";
 
 const meta = preview.meta({
-  title: "Layout/Nav",
+  title: "Componenti/Navigazione/Barra di navigazione",
   component: Nav,
 });
 
-export const Default = meta.story({});
+export const Default = meta.story({ name: "Barra di navigazione" });

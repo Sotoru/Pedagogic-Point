@@ -3,7 +3,7 @@ import { Hero } from "@/components/Hero";
 import { articoloInEvidenza } from "./fixtures";
 
 const meta = preview.meta({
-  title: "Components/Hero",
+  title: "Componenti/Articoli/Articolo in evidenza",
   component: Hero,
   args: { articolo: articoloInEvidenza },
 });
@@ -12,7 +12,7 @@ const meta = preview.meta({
 // the grid via `&:has(a:focus-visible)`, not on the stretched link: tab to the
 // title and the whole hero rings, which is the only honest indication of what
 // the click target actually is.
-export const Default = meta.story({});
+export const Default = meta.story({ name: "Predefinito" });
 
 export const TitoloLungo = meta.story({
   args: {

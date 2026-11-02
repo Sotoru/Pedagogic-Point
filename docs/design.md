@@ -258,9 +258,9 @@ Theme changes use a page cross-fade when View Transitions are available. Navigat
 
 ### Component review
 
-Reuse [components](../components/) and [recipes](../theme/recipes/) before introducing a new primitive. Add or update the corresponding [Storybook stories](../stories/) for new components, variants, and changed interactions. Use the Foundations color and typography views to inspect the generated tokens; do not maintain a second palette or type scale in stories.
+Reuse [components](../components/) and [recipes](../theme/recipes/) before introducing a new primitive. Add or update the corresponding [Storybook stories](../stories/) for new components, variants, and changed interactions. Use the Fondamenti color and typography views to inspect the generated tokens; do not maintain a second palette or type scale in stories.
 
-Review the relevant states in light and dark, at mobile and desktop widths, with keyboard navigation, long Italian labels, missing content, and reduced motion. These are review criteria, not guarantees supplied by a successful build. Run `npm run check:stories` when changing component behavior or stories; use the live-page accessibility check when the change needs verification in its page context.
+Review the relevant states in light and dark, at mobile and desktop widths, with keyboard navigation, long Italian labels, missing content, and reduced motion. These are review criteria, not guarantees supplied by a successful build. Stories follow [docs/storybook.md](storybook.md): do not add a dark copy of a story, the suite runs every story in both schemes. Run `npm run check:stories` when changing component behavior or stories; use the live-page accessibility check when the change needs verification in its page context.
 
 ## Do's and Don'ts
 

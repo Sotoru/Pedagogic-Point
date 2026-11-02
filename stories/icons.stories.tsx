@@ -16,10 +16,11 @@ const ICONS = [
 ] as const;
 
 const meta = preview.meta({
-  title: "Foundations/Icons",
+  title: "Fondamenti/Icone",
 });
 
 export const Tutte = meta.story({
+  name: "Icone",
   render: () => (
     <Flex gap="8" wrap="wrap" align="flex-start">
       {ICONS.map(([name, node]) => (

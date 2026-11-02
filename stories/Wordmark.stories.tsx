@@ -2,7 +2,7 @@ import preview from "../.storybook/preview";
 import { Wordmark } from "@/components/Wordmark";
 
 const meta = preview.meta({
-  title: "Brand/Wordmark",
+  title: "Fondamenti/Marchio",
   component: Wordmark,
 });
 
@@ -10,6 +10,7 @@ const meta = preview.meta({
 // next/font vars are missing from <html> this renders in the generic cursive
 // fallback, which is the fastest way to notice the decorator broke.
 export const Large = meta.story({
+  name: "Grande",
   args: { variant: "brand-wordmark-lg" },
 });
 
@@ -17,5 +18,6 @@ export const Large = meta.story({
 // variant arrives as a prop, so Panda never extracted it and the class did not
 // exist at all until staticCss made it. Guarded by npm run check:tokens.
 export const Small = meta.story({
+  name: "Piccolo",
   args: { variant: "brand-wordmark-sm" },
 });

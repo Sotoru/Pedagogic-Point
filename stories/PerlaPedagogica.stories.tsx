@@ -5,7 +5,7 @@ import { refreshPerla } from "@/app/actions";
 import { perla, perlaAlternativa, perlaBreve, perlaLunga } from "./fixtures";
 
 const meta = preview.meta({
-  title: "Components/PerlaPedagogica",
+  title: "Componenti/Perla pedagogica",
   component: PerlaPedagogica,
   args: { initialPerla: perla },
 });
@@ -14,15 +14,14 @@ const meta = preview.meta({
 // fill lighter than the band, inlined in the component. That inlined `#26292e`
 // is also why check-contrast.mts carries a CARD_FILL special case: real text sits
 // on a colour that is not a token.
-export const Default = meta.story({});
-
-export const Scura = meta.story({ globals: { theme: "dark" } });
+export const Default = meta.story({ name: "Predefinita" });
 
 // Keep both extremes available for mobile/desktop and reduced-motion review.
 export const Breve = meta.story({ args: { initialPerla: perlaBreve } });
-export const Lunga = meta.story({ args: { initialPerla: perlaLunga }, globals: { theme: "dark" } });
+export const Lunga = meta.story({ args: { initialPerla: perlaLunga } });
 
 export const CambioLunghezza = meta.story({
+  tags: ["regression"],
   args: { initialPerla: perlaBreve },
   play: async ({ canvas, userEvent }) => {
     const button = await canvas.findByRole("button", { name: "Mostra un'altra perla" });
@@ -101,7 +100,6 @@ export const Caricamento = meta.story({
 });
 
 export const ErroreERiprova = meta.story({
-  globals: { theme: "dark" },
   play: async ({ canvas, userEvent }) => {
     mocked(refreshPerla).mockResolvedValueOnce(null);
     const button = await canvas.findByRole("button", { name: "Mostra un'altra perla" });
@@ -118,5 +116,6 @@ export const ErroreERiprova = meta.story({
 // No perla in the database → the component renders nothing rather than an empty
 // card. Kept as a story because "renders nothing" is a decision, not an accident.
 export const Assente = meta.story({
+  tags: ["regression"],
   args: { initialPerla: null },
 });

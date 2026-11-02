@@ -3,7 +3,7 @@ import { Button } from "@/components/Button";
 import { button } from "@/styled-system/recipes";
 
 const meta = preview.meta({
-  title: "Components/Button",
+  title: "UI/Pulsante",
   component: Button,
   args: { children: "Carica altri" },
   // `Button` is `styled("button", button)`, and react-docgen can't see through a
@@ -24,11 +24,12 @@ const meta = preview.meta({
   },
 });
 
-export const Outline = meta.story({});
+export const Outline = meta.story({ name: "Contorno" });
 
 // aria-disabled, not disabled: ArticleList needs the button to stay focusable
 // while pending, so the guard — not the attribute — is what makes the request
 // idempotent. Rendered here because the two states look different.
 export const Pending = meta.story({
+  name: "In attesa",
   args: { children: "Caricamento…", "aria-disabled": true },
 });

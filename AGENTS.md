@@ -23,6 +23,7 @@ Context7 MCP also indexes Panda CSS — prefer it for scoped lookups.
 
 - [docs/design.md](docs/design.md): fonte di verità per identità visiva, token Panda, componenti e interazioni; leggere prima di ogni modifica alla UI
 - [docs/git.md](docs/git.md): commit, tag di versione, deploy
+- [docs/storybook.md](docs/storybook.md): organizzazione delle storie, temi, tag, test e deploy della vetrina; le regole per scrivere storie vengono dal MCP Storybook
 
 # Design
 

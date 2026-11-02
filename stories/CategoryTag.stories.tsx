@@ -6,7 +6,7 @@ import { css } from "@/styled-system/css";
 import { Flex } from "@/styled-system/jsx";
 
 const meta = preview.meta({
-  title: "Components/CategoryTag",
+  title: "UI/Etichetta categoria",
   component: CategoryTag,
   argTypes: { categoria: categoriaArgType },
 });

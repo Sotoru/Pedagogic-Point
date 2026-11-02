@@ -4,7 +4,7 @@ import { articoli, articoloSenzaIntroduzione } from "./fixtures";
 import { articleGrid } from "@/styled-system/recipes";
 
 const meta = preview.meta({
-  title: "Components/ArticleCard",
+  title: "Componenti/Articoli/Scheda articolo",
   component: ArticleCard,
   args: { articolo: articoli[1] },
   decorators: [
@@ -20,7 +20,7 @@ const meta = preview.meta({
 
 // Whole card is the click target via the stretched link's ::after; the title is
 // the accessible name, so there is one link per card rather than three.
-export const Default = meta.story({});
+export const Default = meta.story({ name: "Predefinito" });
 
 // Empty `introduzione` → excerpt() returns the generic teaser. The only branch in
 // that helper, and invisible from the site unless an author leaves the field blank.

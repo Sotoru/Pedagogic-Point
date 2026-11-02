@@ -2,7 +2,7 @@ import preview from "../.storybook/preview";
 import { ReadingTime } from "@/components/ReadingTime";
 
 const meta = preview.meta({
-  title: "Components/ReadingTime",
+  title: "Componenti/Articoli/Tempo di lettura",
   component: ReadingTime,
 });
 

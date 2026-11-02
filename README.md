@@ -15,6 +15,7 @@ documento insieme all'implementazione; documentare le eccezioni e il motivo.
 - [Contesto e voce editoriale](CONTEXT.md): pubblico, linguaggio e termini del dominio.
 - [Istruzioni per gli agenti](AGENTS.md): convenzioni e verifiche obbligatorie.
 - [Guida Git](docs/git.md): Conventional Commits, versioni e deploy.
+- [Storybook](docs/storybook.md): organizzazione del catalogo, temi, test e deploy della vetrina.
 
 ### Formato e strumenti Google
 
@@ -56,7 +57,7 @@ npm run dev
 Aprire [localhost:3000](http://localhost:3000). Le funzioni che accedono ai servizi
 esterni richiedono la configurazione d'ambiente locale del progetto.
 
-Per revisionare i componenti e le viste Foundations, con selettore chiaro/scuro:
+Per revisionare i componenti e i Fondamenti, con selettore del tema:
 
 ```sh
 npm run storybook
@@ -65,7 +66,8 @@ npm run storybook
 Aprire [localhost:6006](http://localhost:6006). Aggiungere o aggiornare le
 [storie](stories/) per nuovi componenti, varianti e interazioni; verificare gli
 stati pertinenti, mobile e desktop, tastiera e movimento ridotto secondo la
-checklist del [design system](docs/design.md#component-review).
+checklist del [design system](docs/design.md#component-review). Organizzazione,
+tag e criteri per aggiungere storie: [docs/storybook.md](docs/storybook.md).
 
 ## Verifiche
 
@@ -113,3 +115,7 @@ l'accesso diretto e il ritorno alla home dal logo.
 Seguire [docs/git.md](docs/git.md): commit Conventional Commits, verifiche verdi
 prima del rilascio, produzione Vercel da `main` e versioni nei tag. La guida
 contiene la procedura completa di fast-forward e tagging.
+
+La vetrina Storybook si pubblica con il secondo progetto Vercel
+`pedagogic-point-storybook`, collegato alla stessa repository: impostazioni in
+[docs/storybook.md](docs/storybook.md#deploy).

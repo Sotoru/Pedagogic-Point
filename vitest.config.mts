@@ -20,8 +20,20 @@ export default defineConfig({
           browser: {
             enabled: true,
             headless: true,
-            provider: playwright(),
-            instances: [{ browser: "chromium" }],
+            // Every story runs once per scheme: the preview's `system` theme
+            // follows the emulated preference.
+            instances: [
+              {
+                browser: "chromium",
+                name: "storybook-light",
+                provider: playwright({ contextOptions: { colorScheme: "light" } }),
+              },
+              {
+                browser: "chromium",
+                name: "storybook-dark",
+                provider: playwright({ contextOptions: { colorScheme: "dark" } }),
+              },
+            ],
           },
         },
       },

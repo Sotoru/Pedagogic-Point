@@ -1,4 +1,7 @@
 import type { StorybookConfig } from "@storybook/nextjs-vite";
+import { fileURLToPath } from "node:url";
+import type { Indexer } from "storybook/internal/types";
+import { storyCatalogPlugin } from "./catalog-plugin.ts";
 
 const config: StorybookConfig = {
   framework: "@storybook/nextjs-vite",
@@ -8,22 +11,34 @@ const config: StorybookConfig = {
   // panda.config's `include` for that reason, and without it the sheets emit no
   // classes and render unstyled.
   stories: ["../stories/**/*.stories.@(ts|tsx)"],
+  features: { sidebarOnboardingChecklist: false },
+  tags: {
+    regression: { defaultFilterSelection: "exclude" },
+    diagnostic: { defaultFilterSelection: "exclude" },
+  },
   addons: ["@storybook/addon-a11y", "@storybook/addon-vitest", "@storybook/addon-mcp"],
   // Cover images resolve to public/ instead of Unsplash, so the suite doesn't
   // depend on the network for pixels.
   staticDirs: ["../public"],
-  // The editor is loaded dynamically in the app. Prebundle it here so adding
-  // its stories cannot trigger a Vite reload in the middle of the browser suite.
-  viteFinal: (config) => ({
-    ...config,
-    optimizeDeps: {
-      ...config.optimizeDeps,
-      include: [
-        ...(config.optimizeDeps?.include ?? []),
-        "@mdxeditor/editor", "@mdxeditor/gurx", "@lexical/rich-text", "lexical", "react-dom",
+  viteFinal: async (config, options) => {
+    const indexers = await options.presets.apply<Indexer[]>("experimental_indexers", []);
+    return {
+      ...config,
+      plugins: [
+        ...(config.plugins ?? []),
+        storyCatalogPlugin(fileURLToPath(new URL("../stories", import.meta.url)), indexers),
       ],
-    },
-  }),
+      // The editor is loaded dynamically in the app. Prebundle it here so adding
+      // its stories cannot trigger a Vite reload in the middle of the browser suite.
+      optimizeDeps: {
+        ...config.optimizeDeps,
+        include: [
+          ...(config.optimizeDeps?.include ?? []),
+          "@mdxeditor/editor", "@mdxeditor/gurx", "@lexical/rich-text", "lexical", "react-dom",
+        ],
+      },
+    };
+  },
 };
 
 export default config;

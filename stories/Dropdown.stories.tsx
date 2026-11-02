@@ -3,7 +3,7 @@ import { Dropdown } from "@/components/Dropdown";
 import { TUTTE_LE_CATEGORIE, categoriaFiltroArgType } from "./fixtures";
 
 const meta = preview.meta({
-  title: "Components/Dropdown",
+  title: "UI/Filtro categoria",
   component: Dropdown,
   argTypes: { categoria: categoriaFiltroArgType },
 });
